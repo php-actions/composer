@@ -1,4 +1,4 @@
-name: 'Composer'
+name: 'Composer PHP Action'
 description: 'Use the Composer CLI in your Github Actions.'
 inputs:
   command:
