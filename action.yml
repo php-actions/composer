@@ -1,0 +1,15 @@
+name: 'Composer'
+description: 'Use the Composer CLI in your Github Actions.'
+inputs:
+  command:
+    description: 'Composer command to run'
+    required: true
+    default: 'install'
+outputs:
+  time:
+    description: 'The time the action was run'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.command }}
