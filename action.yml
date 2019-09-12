@@ -13,3 +13,6 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.command }}
+branding:
+  icon: 'package'  
+  color: 'purple'
