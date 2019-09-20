@@ -4,7 +4,7 @@ inputs:
   command:
     description: 'Composer command to run'
     required: true
-    default: "install" "--no-progress"
+    default: help
 outputs:
   time:
     description: 'The time the action was run'
