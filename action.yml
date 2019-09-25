@@ -4,7 +4,7 @@ inputs:
   command:
     description: 'Composer command to run'
     required: true
-    default: help
+    default: install
 outputs:
   time:
     description: 'The time the action was run'
