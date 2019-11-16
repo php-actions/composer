@@ -5,7 +5,7 @@ Use the Composer CLI in your Github Actions.
 
 Composer is a tool for dependency management in PHP. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you.
 
-If you are running tests like [PHPUnit](php-actions-phpunit), [phpspec](php-actions-phpspec) or [Behat](php-actions-behat) in your Github actions, chances are you will need to install your project's dependencies using Composer.
+If you are running tests like [PHPUnit][php-actions-phpunit], [phpspec][php-actions-phpspec] or [Behat][php-actions-behat] in your Github actions, chances are you will need to install your project's dependencies using Composer.
 
 Usage
 -----
@@ -26,3 +26,7 @@ jobs:
     - uses: phpactions/composer@master
     # ... then your own project steps ...
 ```
+
+[php-actions-phpunit]: https://github.com/marketplace/actions/phpunit-php-actions 
+[php-actions-phpspec]: https://github.com/marketplace/actions/phpspec-php-actions 
+[php-actions-behat]: https://github.com/marketplace/actions/behat-php-actions 
