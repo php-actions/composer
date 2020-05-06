@@ -51,7 +51,7 @@ jobs:
 Caching dependencies for faster builds
 --------------------------------------
 
-Github actions supports dependency caching, allowing the `vendor/` directory contents to be cached between workflows, as long as the `composer.lock` file has not changed. This produces much faster builds, as the `composer install` command does not have to be run at all if the cache is valid.
+Github actions supports dependency caching, allowing Composer downloads to be cached between workflows, as long as the `composer.lock` file has not changed. This produces much faster builds, as the `composer install` command does not have to download files over the network at all if the cache is valid.
 
 Example workflow (taken from https://github.com/PhpGt/Dom):
 
@@ -66,6 +66,19 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Cache Composer Downloads
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
       
     - name: Cache PHP dependencies
       uses: actions/cache@v1
@@ -78,7 +91,7 @@ jobs:
     ...      
 ```
 
-In the example above, the "key" is passed to the Cache action that consists of a hash of the composer.lock file. This means that as long as the contents of composer.lock doesn't change between workflows, the vendor directory will be persisted between workflows.
+In the example above, the "key" is passed to the Cache action that consists of a hash of the composer.lock file. This means that as long as the contents of composer.lock doesn't change between workflows, the Composer cache directory will be persisted between workflows.
 
 [php-actions-phpunit]: https://github.com/marketplace/actions/phpunit-php-actions 
 [php-actions-phpspec]: https://github.com/marketplace/actions/phpspec-php-actions 
