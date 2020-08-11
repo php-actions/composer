@@ -35,8 +35,6 @@ By default, adding `- uses: php-actions/composer@v2` into your workflow will run
 You can issue custom commands by passing a `command` input, like so:
 
 ```yaml
-...
-
 jobs:
   build:
 
@@ -51,7 +49,7 @@ jobs:
 Passing arguments
 -----------------
 
-Any arguments can be passed to composer by using the `args` input, however there are a few inputs pre-configured to handle common arguments. All inputs are optional. Please see the following list:
+Any arbitrary arguments can be passed to composer by using the `args` input, however there are a few inputs pre-configured to handle common arguments. All inputs are optional. Please see the following list:
 
 + `interaction` - Whether to ask any interactive questions - yes / no (default no)
 + `suggest` - Whether to show package suggestions - yes / no (default no)
