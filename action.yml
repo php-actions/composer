@@ -2,18 +2,54 @@ name: 'Composer (php-actions)'
 description: 'Use the Composer CLI in your Github Actions.'
 inputs:
   command:
-    description: 'Composer command to run'
+    description: Composer command to run
     required: true
     default: install
+
+  interaction:
+    description: "Whether to ask any interactive questions. Values: 'yes' or 'no'"
+    required: false
+    default: no
+
+  suggest:
+    description: "Whether to show package suggestions. Values: 'yes' or 'no'"
+    required: false
+    default: no
+
+  dev:
+    description: "Whether to install dev packages. Values: 'yes' or 'no'"
+    required: false
+    default: yes
+
+  progress:
+    description: "Whether to output download progress"
+    required: false
+    default: no
+
+  quiet:
+    description: "Whether to suppress all messages"
+    required: false
+    default: no
+
+  args:
+    description: Optional arguments to pass
+    required: false
+
 outputs:
   time:
     description: 'The time the action was run'
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  args:
-    - ${{ inputs.command }}
-    - --no-progress
+  env:
+    action_command: ${{ inputs.command }}
+    action_interaction: ${{ inputs.interaction }}
+    action_suggest: ${{ inputs.suggest }}
+    action_dev: ${{ inputs.dev }}
+    action_progress: ${{ inputs.progress }}
+    action_quiet: ${{ inputs.quiet }}
+    action_args: ${{ inputs.args }}
+
 branding:
   icon: 'package'  
   color: 'purple'
