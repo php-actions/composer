@@ -39,6 +39,10 @@ inputs:
     description: The private key contents to use for private repositories
     required: false
 
+  ssh_key_pub:
+    description: The public key contents to use for private repositories
+    required: false
+
 outputs:
   time:
     description: 'The time the action was run'
@@ -54,6 +58,7 @@ runs:
     action_quiet: ${{ inputs.quiet }}
     action_args: ${{ inputs.args }}
     action_ssh_key: ${{ inputs.ssh_key }}
+    action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
 
 branding:
   icon: 'package'  
