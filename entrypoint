@@ -15,11 +15,9 @@ then
 	chmod 600 /root/.ssh/id_rsa
 
 	echo "PRIVATE KEY:"
-	cat /root/.ssh/id_rsa
-
-	echo "---"
+	md5sum /root/.ssh/id_rsa
 	echo "PUBLIC KEY:"
-	cat /root/.ssh/id_rsa.pub
+	md5sum /root/.ssh/id_rsa.pub
 fi
 
 if [ -n "$action_command" ]
