@@ -5,7 +5,8 @@ command_string="composer -vvv"
 
 if [ -n "$action_ssh_key" ]
 then
-	echo "Storing private key file for $USER"
+	echo "Storing private key file for root"
+	mkdir -p /root/.ssh
 	echo "$action_ssh_key" > /root/.ssh/id_rsa
 	chmod 600 /root/.ssh/id_rsa
 fi
