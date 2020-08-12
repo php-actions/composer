@@ -7,9 +7,9 @@ if [ -n "$action_ssh_key" ]
 then
 	echo "Storing private key file for root"
 	mkdir -p /root/.ssh
-	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-	ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
+	ssh-keyscan -t rsa github.com >> /root/.ssh/.ssh/known_hosts
+	ssh-keyscan -t rsa gitlab.com >> /root/.ssh/.ssh/known_hosts
+	ssh-keyscan -t rsa bitbucket.org >> /root/.ssh/.ssh/known_hosts
 	echo "$action_ssh_key" > /root/.ssh/id_rsa
 	echo "$action_ssh_key_pub" > /root/.ssh/id_rsa.pub
 	chmod 600 /root/.ssh/id_rsa
