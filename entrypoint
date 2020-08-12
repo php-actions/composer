@@ -10,6 +10,12 @@ then
 	ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 	ssh-keyscan -t rsa gitlab.com >> /root/.ssh/known_hosts
 	ssh-keyscan -t rsa bitbucket.org >> /root/.ssh/known_hosts
+
+	if [ -n "$action_ssh_domain" ]
+	then
+		ssh-keyscan -t rsa "$action_ssh_domain" >> /root/.ssh/known_hosts
+	fi
+
 	echo "$action_ssh_key" > /root/.ssh/id_rsa
 	echo "$action_ssh_key_pub" > /root/.ssh/id_rsa.pub
 	chmod 600 /root/.ssh/id_rsa

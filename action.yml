@@ -43,6 +43,10 @@ inputs:
     description: The public key contents to use for private repositories
     required: false
 
+  ssh_domain:
+    description: The domain to gether SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
+    required: false
+
 outputs:
   time:
     description: 'The time the action was run'
@@ -59,6 +63,7 @@ runs:
     action_args: ${{ inputs.args }}
     action_ssh_key: ${{ inputs.ssh_key }}
     action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
+    action_ssh_domain: ${{ inputs.ssh_domain }}
 
 branding:
   icon: 'package'  
