@@ -3,8 +3,8 @@ set -e
 
 command_string="composer -vvv"
 
-pwd
-whoami
+su runner
+cd /github/workspace
 ssh -vvv git@github.com
 echo "Test has completed"
 exit
