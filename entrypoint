@@ -3,6 +3,10 @@ set -e
 
 command_string="composer -vvv"
 
+ssh -vvv git@github.com
+echo "Test has completed"
+exit
+
 if [ -n "$action_command" ]
 then
 	command_string="$command_string $action_command"
