@@ -35,6 +35,10 @@ inputs:
     description: Optional arguments to pass
     required: false
 
+  ssh_key:
+    description: The private key contents to use for private repositories
+    required: false
+
 outputs:
   time:
     description: 'The time the action was run'
@@ -49,6 +53,7 @@ runs:
     action_progress: ${{ inputs.progress }}
     action_quiet: ${{ inputs.quiet }}
     action_args: ${{ inputs.args }}
+    action_ssh_key: ${{ inputs.ssh_key }}
 
 branding:
   icon: 'package'  
