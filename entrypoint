@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-command_string="composer"
+command_string="composer -vvv"
 
 if [ -n "$action_command" ]
 then
