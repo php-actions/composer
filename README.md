@@ -7,6 +7,8 @@ Composer is a tool for dependency management in PHP. It allows you to declare th
 
 If you are running tests like [PHPUnit][php-actions-phpunit], [phpspec][php-actions-phpspec] or [Behat][php-actions-behat] in your Github actions, chances are you will need to install your project's dependencies using Composer.
 
+An example repository has been created at https://github.com/php-actions/example-composer to show how to use this action in a real project. The repository also depends on a private dependency and uses SSH keys for authentication.
+
 Usage
 -----
 
@@ -57,6 +59,8 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `progress` - Whether to output download progress - yes / no (default no)
 + `quiet` - Whether to suppress all messages - yes / no (default no)
 + `args` - Optional arguments to pass - no constraints (default _empty_)
+
+There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
 Example of a yaml config that wants to see suggestions and does not want to install dev packages, and passes the `--profile` and `--ignore-platform-reqs` arguments:
 
@@ -119,6 +123,30 @@ jobs:
 
 In the example above, the "key" is passed to the Cache action that consists of a hash of the composer.lock file. This means that as long as the contents of composer.lock doesn't change between workflows, the Composer cache directory will be persisted between workflows.
 
+Installing private repositories
+-------------------------------
+
+To install from a private repository, SSH authentication must be used. Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [deploy keys][deploy-keys]. 
+
+Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `ssh_key` and `ssh_key_pub` inputs. If your private repository is stored on another server than github.com, you also need to pass the domain via `ssh_domain`.
+
+Example yaml, showing how to pass secrets:
+
+```yaml
+jobs:
+  build:
+
+    ...
+
+    - name: Install dependencies
+      uses: php-actions/composer@v2
+      with:
+        ssh_key: ${{ secrets.ssh_key }}
+        ssh_key_pub: ${{ secrets.ssh_key_pub }}
+```
+
+There is an example repository available for reference at https://github.com/php-actions/example-composer that uses a private dependency. Check it out for a live working project.
+
 ***
 
 If you found this repository helpful, please consider [sponsoring the developer][sponsor].
@@ -126,4 +154,6 @@ If you found this repository helpful, please consider [sponsoring the developer]
 [php-actions-phpunit]: https://github.com/marketplace/actions/phpunit-php-actions 
 [php-actions-phpspec]: https://github.com/marketplace/actions/phpspec-php-actions 
 [php-actions-behat]: https://github.com/marketplace/actions/behat-php-actions 
+[deploy-keys]: https://docs.github.com/en/developers/overview/managing-deploy-keys
+[secrets]: https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
 [sponsor]: https://github.com/sponsors/g105b

@@ -44,7 +44,7 @@ inputs:
     required: false
 
   ssh_domain:
-    description: The domain to gether SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
+    description: The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
     required: false
 
 outputs:
