@@ -73,7 +73,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v2
       with:
-        suggestions: yes
+        suggest: yes
         dev: no
         args: --profile --ignore-platform-reqs
 ```
