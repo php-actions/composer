@@ -31,74 +31,80 @@ then
 	command_string="$command_string $action_command"
 fi
 
-case "$action_interaction" in
-	yes)
-		# Default behaviour
-	;;
-	no)
-		command_string="$command_string --no-interaction"
-	;;
-	*)
-		echo "Invalid input for action argument: interaction  (must be yes or no)"
-		exit 1
-	;;
-esac
-
-case "$action_suggest" in
-	yes)
-		# Default behaviour
-	;;
-	no)
-		command_string="$command_string --no-suggest"
-	;;
-	*)
-		echo "Invalid input for action argument: suggest (must be yes or no)"
-		exit 1
-	;;
-esac
-
-case "$action_dev" in
-	yes)
-		# Default behaviour
-	;;
-	no)
-		command_string="$command_string --no-dev"
-	;;
-	*)
-		echo "Invalid input for action argument: dev (must be yes or no)"
-		exit 1
-	;;
-esac
-
-case "$action_progress" in
-	yes)
-		# Default behaviour
-	;;
-	no)
-		command_string="$command_string --no-progress"
-	;;
-	*)
-		echo "Invalid input for action argument: progress (must be yes or no)"
-		exit 1
-	;;
-esac
-
-case "$action_quiet" in
-	yes)
-		command_string="$command_string --quiet"
-	;;
-	no)
-		# Default behaviour
-	;;
-	*)
-		echo "Invalid input for action argument: quiet (must be yes or no)"
-		exit 1
-	;;
-esac
-
-if [ -n "$action_args" ]
+if [ ! -n "$action_only_args" ]
 then
-	command_string="$command_string $action_args"
+
+	case "$action_interaction" in
+		yes)
+			# Default behaviour
+		;;
+		no)
+			command_string="$command_string --no-interaction"
+		;;
+		*)
+			echo "Invalid input for action argument: interaction  (must be yes or no)"
+			exit 1
+		;;
+	esac
+
+	case "$action_suggest" in
+		yes)
+			# Default behaviour
+		;;
+		no)
+			command_string="$command_string --no-suggest"
+		;;
+		*)
+			echo "Invalid input for action argument: suggest (must be yes or no)"
+			exit 1
+		;;
+	esac
+
+	case "$action_dev" in
+		yes)
+			# Default behaviour
+		;;
+		no)
+			command_string="$command_string --no-dev"
+		;;
+		*)
+			echo "Invalid input for action argument: dev (must be yes or no)"
+			exit 1
+		;;
+	esac
+
+	case "$action_progress" in
+		yes)
+			# Default behaviour
+		;;
+		no)
+			command_string="$command_string --no-progress"
+		;;
+		*)
+			echo "Invalid input for action argument: progress (must be yes or no)"
+			exit 1
+		;;
+	esac
+
+	case "$action_quiet" in
+		yes)
+			command_string="$command_string --quiet"
+		;;
+		no)
+			# Default behaviour
+		;;
+		*)
+			echo "Invalid input for action argument: quiet (must be yes or no)"
+			exit 1
+		;;
+	esac
+
+	if [ -n "$action_args" ]
+	then
+		command_string="$command_string $action_args"
+	fi
+else
+	command_string="$command_string $action_only_args"
 fi
 
 echo "Command: $command_string"

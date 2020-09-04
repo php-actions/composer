@@ -59,6 +59,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `progress` - Whether to output download progress - yes / no (default no)
 + `quiet` - Whether to suppress all messages - yes / no (default no)
 + `args` - Optional arguments to pass - no constraints (default _empty_)
++ `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
