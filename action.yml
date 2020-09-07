@@ -59,6 +59,7 @@ runs:
   image: 'Dockerfile'
   env:
     action_command: ${{ inputs.command }}
+    action_only_args: ${{ inputs.only_args }}
     action_interaction: ${{ inputs.interaction }}
     action_suggest: ${{ inputs.suggest }}
     action_dev: ${{ inputs.dev }}
