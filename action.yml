@@ -6,6 +6,10 @@ inputs:
     required: true
     default: install
 
+  only_args:
+    description: "Only run the desired command with this args. Ignoring all other provided arguments"
+    required: false
+
   interaction:
     description: "Whether to ask any interactive questions. Values: 'yes' or 'no'"
     required: false
@@ -55,6 +59,7 @@ runs:
   image: 'Dockerfile'
   env:
     action_command: ${{ inputs.command }}
+    action_only_args: ${{ inputs.only_args }}
     action_interaction: ${{ inputs.interaction }}
     action_suggest: ${{ inputs.suggest }}
     action_dev: ${{ inputs.dev }}
