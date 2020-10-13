@@ -33,6 +33,47 @@ fi
 
 if [ ! -n "$action_only_args" ]
 then
+	if [ "$action_command" != "install" ]
+		case "$action_suggest" in
+        		yes)
+        			# Default behaviour
+        		;;
+        		no)
+        			command_string="$command_string --no-suggest"
+        		;;
+        		*)
+        			echo "Invalid input for action argument: suggest (must be yes or no)"
+        			exit 1
+        		;;
+        	esac
+
+        	case "$action_dev" in
+        		yes)
+        			# Default behaviour
+        		;;
+        		no)
+        			command_string="$command_string --no-dev"
+        		;;
+        		*)
+        			echo "Invalid input for action argument: dev (must be yes or no)"
+        			exit 1
+        		;;
+        	esac
+
+        	case "$action_progress" in
+        		yes)
+        			# Default behaviour
+        		;;
+        		no)
+        			command_string="$command_string --no-progress"
+        		;;
+        		*)
+        			echo "Invalid input for action argument: progress (must be yes or no)"
+        			exit 1
+        		;;
+        	esac
+	then
+	fi
 
 	case "$action_interaction" in
 		yes)
@@ -43,45 +84,6 @@ then
 		;;
 		*)
 			echo "Invalid input for action argument: interaction  (must be yes or no)"
-			exit 1
-		;;
-	esac
-
-	case "$action_suggest" in
-		yes)
-			# Default behaviour
-		;;
-		no)
-			command_string="$command_string --no-suggest"
-		;;
-		*)
-			echo "Invalid input for action argument: suggest (must be yes or no)"
-			exit 1
-		;;
-	esac
-
-	case "$action_dev" in
-		yes)
-			# Default behaviour
-		;;
-		no)
-			command_string="$command_string --no-dev"
-		;;
-		*)
-			echo "Invalid input for action argument: dev (must be yes or no)"
-			exit 1
-		;;
-	esac
-
-	case "$action_progress" in
-		yes)
-			# Default behaviour
-		;;
-		no)
-			command_string="$command_string --no-progress"
-		;;
-		*)
-			echo "Invalid input for action argument: progress (must be yes or no)"
 			exit 1
 		;;
 	esac
