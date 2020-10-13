@@ -33,7 +33,7 @@ fi
 
 if [ ! -n "$action_only_args" ]
 then
-	if [ "$action_command" != "install" ]
+	if [ "$action_command" = "install" ]
 	then
 		case "$action_suggest" in
         		yes)
