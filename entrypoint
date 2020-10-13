@@ -34,6 +34,7 @@ fi
 if [ ! -n "$action_only_args" ]
 then
 	if [ "$action_command" != "install" ]
+	then
 		case "$action_suggest" in
         		yes)
         			# Default behaviour
@@ -72,7 +73,6 @@ then
         			exit 1
         		;;
         	esac
-	then
 	fi
 
 	case "$action_interaction" in
