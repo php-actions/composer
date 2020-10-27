@@ -33,7 +33,7 @@ fi
 
 if [ -n "$action_working_dir" ]
 then
-	command_string="$command string --working-dir=$action_working_dir"
+	command_string="$command_string --working-dir=$action_working_dir"
 fi
 
 if [ ! -n "$action_only_args" ]
