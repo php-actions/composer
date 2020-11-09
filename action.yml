@@ -1,6 +1,16 @@
 name: 'Composer (php-actions)'
 description: 'Use the Composer CLI in your Github Actions.'
 inputs:
+  php_version:
+    description: What version of PHP to use
+    default: latest
+    required: false
+
+  composer_version:
+    description: What version of Composer to use
+    default: latest
+    required: false
+
   command:
     description: Composer command to run
     required: true
