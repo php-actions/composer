@@ -72,6 +72,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
+    action_php_version: ${{ inputs.php_version }}
+    action_composer_version: ${{ inputs.composer_version }}
     action_command: ${{ inputs.command }}
     action_only_args: ${{ inputs.only_args }}
     action_interaction: ${{ inputs.interaction }}
