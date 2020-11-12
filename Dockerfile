@@ -1,4 +1,4 @@
-FROM ghcr.io/php-actions/php-build:latest
+FROM ghcr.io/php-actions/php-build:v1
 
 LABEL repository="https://github.com/php-actions/composer"
 LABEL homepage="https://github.com/php-actions/composer"
