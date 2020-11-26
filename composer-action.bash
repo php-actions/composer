@@ -23,6 +23,8 @@ then
 	md5sum ~/.ssh/id_rsa
 	echo "PUBLIC KEY:"
 	md5sum ~/.ssh/id_rsa.pub
+else
+	echo "No private keys supplied"
 fi
 
 if [ -n "$ACTION_COMMAND" ]
@@ -125,7 +127,8 @@ echo "::set-output name=full_command::${command_string}"
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
 docker run --rm \
-	--volume ~/.ssh:/root/.ssh \
+	--volume ~/.ssh/id_rsa:/root/.ssh/id_rsa \
+	--volume ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
