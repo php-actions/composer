@@ -62,9 +62,6 @@ inputs:
     required: false
 
 outputs:
-  time:
-    description: "The time the action was run"
-
   composer_cache_dir:
     description: "Where composer created its cache"
     value: ${{ steps.composer_run.outputs.composer_cache_dir }}
@@ -96,29 +93,7 @@ runs:
         action_working_dir: ${{ inputs.working_dir }}
       shell: bash
       id: composer_run
-      run: |
-        set -e
-        # Make sure the latest version is available, pull it quietly
-        docker pull -q composer:${action_composer_version}
-        # Extract the major version
-        DETECTED_VERSION=$(docker run --rm composer:${action_composer_version} --version | perl -pe '($_)=/\b(\d+.\d+\.\d+)\b/;')
-        DETECTED_MAJOR_VERSION=$(docker run --rm composer:${action_composer_version} --version | perl -pe '($_)=/\b(\d)\d*\.\d+\.\d+/;')
-        echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
-        echo "::set-output name=composer_major_version::${DETECTED_MAJOR_VERSION}"
-        echo "::set-output name=composer_version::${DETECTED_VERSION}"
-        case "${action_command}" in
-          get_config)
-            exit
-            ;;
-          *)
-            echo "Running composer v${DETECTED_VERSION} with: $action_command $action_args"
-            docker run --rm \
-              --volume ${RUNNER_WORKSPACE}/composer:/tmp \
-              --volume ${GITHUB_WORKSPACE}:/app \
-              -w /app \
-              composer:${action_composer_version} $action_command $action_args
-            ;;
-        esac
+      run: composer-action.bash
 
 branding:
   icon: 'package'  
