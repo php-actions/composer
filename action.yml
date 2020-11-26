@@ -1,5 +1,5 @@
-name: 'Composer (php-actions)'
-description: 'Use the Composer CLI in your Github Actions.'
+name: Composer (php-actions)
+description: Use the Composer CLI in your Github Actions.
 
 inputs:
   composer_version:
