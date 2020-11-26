@@ -93,8 +93,8 @@ runs:
         action_working_dir: ${{ inputs.working_dir }}
       shell: bash
       id: composer_run
-#      working-directory: $GITHUB_WORKSPACE
-      run: ./composer-action.bash
+      working-directory: $GITHUB_WORKSPACE
+      run: pwd && ./composer-action.bash
 
 branding:
   icon: 'package'  
