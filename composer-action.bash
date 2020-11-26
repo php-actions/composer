@@ -26,7 +26,7 @@ then
 	md5sum ~/.ssh/action_rsa.pub
 
 	echo "[core]" >> ~/.gitconfig
-	echo "sshCommand = \"ssh -F ~/.ssh/action_rsa\"" >> ~/.gitconfig
+	echo "sshCommand = \"ssh -i ~/.ssh/action_rsa\"" >> ~/.gitconfig
 else
 	echo "No private keys supplied"
 fi
