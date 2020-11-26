@@ -94,7 +94,7 @@ runs:
       shell: bash
       id: composer_run
       working-directory: $GITHUB_WORKSPACE
-      run: pwd && ./composer-action.bash
+      run: pwd && ls
 
 branding:
   icon: 'package'  
