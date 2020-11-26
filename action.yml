@@ -78,19 +78,19 @@ runs:
   using: "composite"
   steps:
     - env:
-        action_composer_version: ${{ inputs.composer_version }}
-        action_command: ${{ inputs.command }}
-        action_only_args: ${{ inputs.only_args }}
-        action_interaction: ${{ inputs.interaction }}
-        action_suggest: ${{ inputs.suggest }}
-        action_dev: ${{ inputs.dev }}
-        action_progress: ${{ inputs.progress }}
-        action_quiet: ${{ inputs.quiet }}
-        action_args: ${{ inputs.args }}
-        action_ssh_key: ${{ inputs.ssh_key }}
-        action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
-        action_ssh_domain: ${{ inputs.ssh_domain }}
-        action_working_dir: ${{ inputs.working_dir }}
+        ACTION_COMPOSER_VERSION: ${{ inputs.composer_version }}
+        ACTION_COMMAND: ${{ inputs.command }}
+        ACTION_ONLY_ARGS: ${{ inputs.only_args }}
+        ACTION_INTERACTION: ${{ inputs.interaction }}
+        ACTION_SUGGEST: ${{ inputs.suggest }}
+        ACTION_DEV: ${{ inputs.dev }}
+        ACTION_PROGRESS: ${{ inputs.progress }}
+        ACTION_QUIET: ${{ inputs.quiet }}
+        ACTION_ARGS: ${{ inputs.args }}
+        ACTION_SSH_KEY: ${{ inputs.ssh_key }}
+        ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
+        ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
+        ACTION_WORKING_DIR: ${{ inputs.working_dir }}
       id: composer_run
       run: ${{ github.action_path }}/composer-action.bash
       shell: bash
