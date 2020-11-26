@@ -69,6 +69,10 @@ outputs:
     description: "Exact version of the composer run"
     value: ${{ steps.composer_run.outputs.composer_major_version }}
 
+  full_command:
+    description: "The full command passed to docker to run"
+    value: ${{ steps.composer_run.putputs.full_command }}
+
 runs:
   using: "composite"
   steps:

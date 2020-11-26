@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
+# command_string is passed directly to the docker executable. It includes the
+# container name and version, and this script will build up the rest of the
+# arguments according to the action's input values.
 command_string="composer:${ACTION_COMPOSER_VERSION}"
+
+# In case there is need to install private repositories, SSH details are stored
+# in these two places, which are mounted on the Composer docker container later.
 mkdir -p ~/.ssh
 touch ~/.gitconfig
 
@@ -41,8 +47,10 @@ then
 	command_string="$command_string --working-dir=$ACTION_WORKING_DIR"
 fi
 
-# TODO: Use -z instead of ! -n
-if [ ! -n "$ACTION_ONLY_ARGS" ]
+# If the ACTION_ONLY_ARGS has _not_ been passed, then we build up the arguments
+# that have been specified. The else condition to this if statement allows
+# the developer to specify exactly what arguments to pass to Composer.
+if [ -z "$ACTION_ONLY_ARGS" ]
 then
 	if [ "$ACTION_COMMAND" = "install" ]
 	then
@@ -107,9 +115,12 @@ else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
 
+# Ensure we have all tags pulled, as if a developer specified version "latest",
+# we should use whatever Docker Hub considers the latest version.
 docker pull -q composer:"${ACTION_COMPOSER_VERSION}"
 detected_version=$(docker run --rm composer:"${ACTION_COMPOSER_VERSION}" --version | perl -pe '($_)=/\b(\d+.\d+\.\d+)\b/;')
 detected_major_version=$(docker run --rm composer:"${ACTION_COMPOSER_VERSION}" --version | perl -pe '($_)=/\b(\d)\d*\.\d+\.\d+/;')
+
 echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
 echo "::set-output name=composer_major_version::${detected_major_version}"
 echo "::set-output name=composer_version::${detected_version}"
