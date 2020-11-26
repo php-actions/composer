@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 command_string="composer:${ACTION_COMPOSER_VERSION}"
-
 mkdir -p ~/.ssh
+touch ~/.gitconfig
 
 if [ -n "$ACTION_SSH_KEY" ]
 then
@@ -25,7 +25,8 @@ then
 	echo "PUBLIC KEY:"
 	md5sum ~/.ssh/action_rsa.pub
 
-	command_string="git config core.sshCommand \"ssh -F ~/.ssh/action_rsa\" && $command_string"
+	echo "[core]" >> ~/.gitconfig
+	echo "sshCommand = \"ssh -F ~/.ssh/action_rsa\"" >> ~/.gitconfig
 else
 	echo "No private keys supplied"
 fi
@@ -130,6 +131,7 @@ echo "::set-output name=full_command::${command_string}"
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
 docker run --rm \
+	--volume ~/.gitconfig:/root/.gitconfig \
 	--volume ~/.ssh:/root/.ssh \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
