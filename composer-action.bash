@@ -124,10 +124,9 @@ echo "::set-output name=full_command::${command_string}"
 
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
-echo "Full docker command: docker run --rm --volume ~/.ssh:/root/.ssh --volume ${RUNNER_WORKSPACE}/composer:/tmp --volume ${GITHUB_WORKSPACE}:/app --workdir /app ${command_string}"
 docker run --rm \
 	--volume ~/.ssh:/root/.ssh \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
-	"${command_string}"
+	${command_string}
