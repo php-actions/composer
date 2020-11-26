@@ -54,7 +54,6 @@ Passing arguments
 Any arbitrary arguments can be passed to composer by using the `args` input, however there are a few inputs pre-configured to handle common arguments. All inputs are optional. Please see the following list:
 
 + `interaction` - Whether to ask any interactive questions - yes / no (default no)
-+ `suggest` - Whether to show package suggestions - yes / no (default no)
 + `dev` - Whether to install dev packages - yes / no (default **yes**)
 + `progress` - Whether to output download progress - yes / no (default no)
 + `quiet` - Whether to suppress all messages - yes / no (default no)
@@ -65,7 +64,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
-Example of a yaml config that wants to see suggestions and does not want to install dev packages, and passes the `--profile` and `--ignore-platform-reqs` arguments:
+Example of a yaml config that does not want to install dev packages, and passes the `--profile` and `--ignore-platform-reqs` arguments:
 
 ```yaml
 jobs:
@@ -76,7 +75,6 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v4
       with:
-        suggest: yes
         dev: no
         args: --profile --ignore-platform-reqs
 ```
