@@ -91,10 +91,9 @@ runs:
         action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
         action_ssh_domain: ${{ inputs.ssh_domain }}
         action_working_dir: ${{ inputs.working_dir }}
-      shell: bash
       id: composer_run
-#      working-directory: $GITHUB_WORKSPACE
-      run: echo $GITHUB_WORKSPACE && pwd && ls && echo $RUNNER_WORKSPACE && cd $RUNNER_WORKSPACE && ls
+      run: ${{ github.action_path }}/composer-action.bash
+      shell: bash
 
 branding:
   icon: 'package'  
