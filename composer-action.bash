@@ -2,10 +2,11 @@
 set -e
 command_string="composer:${ACTION_COMPOSER_VERSION}"
 
+mkdir -p ~/.ssh
+
 if [ -n "$ACTION_SSH_KEY" ]
 then
 	echo "Storing private key file for root"
-	mkdir -p ~/.ssh
 	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
 	ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
@@ -15,14 +16,16 @@ then
 		ssh-keyscan -t rsa "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
 	fi
 
-	echo "$ACTION_SSH_KEY" > ~/.ssh/id_rsa
-	echo "$ACTION_SSH_KEY_PUB" > ~/.ssh/id_rsa.pub
-	chmod 600 ~/.ssh/id_rsa
+	echo "$ACTION_SSH_KEY" > ~/.ssh/action_rsa
+	echo "$ACTION_SSH_KEY_PUB" > ~/.ssh/action_rsa.pub
+	chmod 600 ~/.ssh/action_rsa
 
 	echo "PRIVATE KEY:"
-	md5sum ~/.ssh/id_rsa
+	md5sum ~/.ssh/action_rsa
 	echo "PUBLIC KEY:"
-	md5sum ~/.ssh/id_rsa.pub
+	md5sum ~/.ssh/action_rsa.pub
+
+	command_string="git config core.sshCommand \"ssh -F ~/.ssh/action_rsa\" && $command_string"
 else
 	echo "No private keys supplied"
 fi
@@ -127,8 +130,7 @@ echo "::set-output name=full_command::${command_string}"
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
 docker run --rm \
-	--volume ~/.ssh/id_rsa:/root/.ssh/id_rsa \
-	--volume ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
+	--volume ~/.ssh:/root/.ssh \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
