@@ -46,19 +46,6 @@ if [ ! -n "$ACTION_ONLY_ARGS" ]
 then
 	if [ "$ACTION_COMMAND" = "install" ]
 	then
-		case "$ACTION_SUGGEST" in
-        		yes)
-        			# Default behaviour
-        		;;
-        		no)
-        			command_string="$command_string --no-suggest"
-        		;;
-        		*)
-        			echo "Invalid input for action argument: suggest (must be yes or no)"
-        			exit 1
-        		;;
-        	esac
-
         	case "$ACTION_DEV" in
         		yes)
         			# Default behaviour

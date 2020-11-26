@@ -21,11 +21,6 @@ inputs:
     required: false
     default: no
 
-  suggest:
-    description: "Whether to show package suggestions. Values: 'yes' or 'no'"
-    required: false
-    default: no
-
   dev:
     description: "Whether to install dev packages. Values: 'yes' or 'no'"
     required: false
@@ -82,7 +77,6 @@ runs:
         ACTION_COMMAND: ${{ inputs.command }}
         ACTION_ONLY_ARGS: ${{ inputs.only_args }}
         ACTION_INTERACTION: ${{ inputs.interaction }}
-        ACTION_SUGGEST: ${{ inputs.suggest }}
         ACTION_DEV: ${{ inputs.dev }}
         ACTION_PROGRESS: ${{ inputs.progress }}
         ACTION_QUIET: ${{ inputs.quiet }}
