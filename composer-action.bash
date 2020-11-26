@@ -129,4 +129,4 @@ docker run --rm \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
-	"${command_string}"
+	composer:"${ACTION_COMPOSER_VERSION}" "${command_string}"
