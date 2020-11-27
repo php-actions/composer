@@ -4,6 +4,16 @@ github_action_path=$(dirname "$0")
 docker_tag=$(cat ./docker_tag)
 echo "Docker tag: $docker_tag"
 
+phar_url="https://getcomposer.org"
+if [ "$ACTION_VERSION" == "latest" ]
+then
+	phar_url="${phar_url}/composer-stable.phar"
+else
+	phar_url="${phar_url}/download/${ACTION_VERSION}/composer.phar"
+fi
+curl -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
+chmod +x "${github_action_path}/composer.phar"
+
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
 # arguments according to the action's input values.
