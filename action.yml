@@ -2,9 +2,18 @@ name: Composer (php-actions)
 description: Use the Composer CLI in your Github Actions.
 
 inputs:
-  composer_version:
+  version:
     description: What version of Composer to use
     default: latest
+    required: false
+
+  php_version:
+    description: What version of PHP to use
+    default: latest
+    required: false
+
+  php_extensions:
+    description: List of extensions to configure with the PHP build
     required: false
 
   command:
@@ -77,7 +86,9 @@ runs:
   using: "composite"
   steps:
     - env:
-        ACTION_COMPOSER_VERSION: ${{ inputs.composer_version }}
+        ACTION_VERSION: ${{ inputs.version }}
+        ACTION_PHP_VERSION: ${{ inputs.php_version }}
+        ACTION_PHP_EXTENSIONS: ${{ inputs.php_extensions }}
         ACTION_COMMAND: ${{ inputs.command }}
         ACTION_ONLY_ARGS: ${{ inputs.only_args }}
         ACTION_INTERACTION: ${{ inputs.interaction }}
@@ -90,7 +101,8 @@ runs:
         ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
       id: composer_run
-      run: ${{ github.action_path }}/composer-action.bash
+      run: ${{ github.action_path }}/setup-php.bash composer \
+        && ${{ github.action_path }}/composer-action.bash
       shell: bash
 
 branding:
