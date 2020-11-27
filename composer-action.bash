@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 github_action_path=$(dirname "$0")
+docker_tag=$(cat ./docker_tag)
+echo "Docker tag: $docker_tag"
 
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
@@ -116,8 +118,6 @@ then
 else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
-
-docker_tag=$(cat ./docker_tag)
 
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
