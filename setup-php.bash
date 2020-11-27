@@ -64,10 +64,11 @@ done
 # Tag the Docker build with a name that identifies the combination of extensions
 # so that each combination only needs to be built once.
 dockerfile_hash=($(echo "$dockerfile" | md5sum))
-docker_tag="php-actions/setup-php":"${dockerfile_hash}"
+docker_tag="php-actions/setup-php-$ACTION_PHP_VERSION":"${dockerfile_hash}"
 echo "$docker_tag" > ./docker_tag
 
 echo "$dockerfile" | docker build --tag "$docker_tag" -
+# TODO: We need to push the build to php-actions packages
 
 curl -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/${bin_name}.phar"
 chmod +x "${github_action_path}/${bin_name}.phar"
