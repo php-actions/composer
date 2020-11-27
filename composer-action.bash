@@ -139,4 +139,4 @@ docker run --rm \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
-	${docker_tag} ${command_string}
+	"${docker_tag}" ${command_string}
