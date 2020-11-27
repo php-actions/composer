@@ -70,14 +70,6 @@ outputs:
     description: "Where composer created its cache"
     value: ${{ steps.composer_run.outputs.composer_cache_dir }}
 
-  composer_major_version:
-    description: "Major version of the composer run (can be used as part of the cache key)"
-    value: ${{ steps.composer_run.outputs.composer_major_version }}
-
-  composer_version:
-    description: "Exact version of the composer run"
-    value: ${{ steps.composer_run.outputs.composer_major_version }}
-
   full_command:
     description: "The full command passed to docker to run"
     value: ${{ steps.composer_run.putputs.full_command }}

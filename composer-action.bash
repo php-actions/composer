@@ -117,17 +117,6 @@ else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
 
-# Ensure we have all tags pulled, as if a developer specified version "latest",
-# we should use whatever Docker Hub considers the latest version.
-docker pull -q composer:"${ACTION_COMPOSER_VERSION}"
-detected_version=$(docker run --rm composer:"${ACTION_COMPOSER_VERSION}" --version | perl -pe '($_)=/\b(\d+.\d+\.\d+)\b/;')
-detected_major_version=$(docker run --rm composer:"${ACTION_COMPOSER_VERSION}" --version | perl -pe '($_)=/\b(\d)\d*\.\d+\.\d+/;')
-
-echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
-echo "::set-output name=composer_major_version::${detected_major_version}"
-echo "::set-output name=composer_version::${detected_version}"
-echo "::set-output name=full_command::${command_string}"
-
 docker_tag=$(cat ./docker_tag)
 
 echo "Running composer v${detected_version}"
@@ -139,4 +128,7 @@ docker run --rm \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
-	"${docker_tag}" ${command_string}
+	${docker_tag} ${command_string}
+
+echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
+echo "::set-output name=full_command::${command_string}"
