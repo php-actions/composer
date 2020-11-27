@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
+github_action_path=$(dirname "$0")
+
 # command_string is passed directly to the docker executable. It includes the
 # container name and version, and this script will build up the rest of the
 # arguments according to the action's input values.
-command_string="composer:${ACTION_COMPOSER_VERSION}"
+command_string="composer"
 
 # In case there is need to install private repositories, SSH details are stored
 # in these two places, which are mounted on the Composer docker container later.
@@ -126,12 +128,15 @@ echo "::set-output name=composer_major_version::${detected_major_version}"
 echo "::set-output name=composer_version::${detected_version}"
 echo "::set-output name=full_command::${command_string}"
 
+docker_tag=$(cat ./docker_tag)
+
 echo "Running composer v${detected_version}"
 echo "Command: $command_string"
 docker run --rm \
+	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
 	--volume ~/.ssh:/root/.ssh \
 	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--workdir /app \
-	${command_string}
+	${docker_tag} ${command_string}
