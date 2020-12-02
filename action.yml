@@ -61,6 +61,14 @@ inputs:
     description: The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
     required: false
 
+  oauth_token:
+    description: The user oauth key to use for private repositories
+    required: false
+
+  oauth_domain:
+    description: The oauth domain to gather oauth_token for
+    required: false
+
   working_dir:
     description: Use the given directory as working directory
     required: false
@@ -85,6 +93,8 @@ runs:
     action_ssh_key: ${{ inputs.ssh_key }}
     action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
     action_ssh_domain: ${{ inputs.ssh_domain }}
+    action_oauth_token: ${{ inputs.oauth_token }}
+    action_oauth_domain: ${{ inputs.oauth_domain }}
     action_working_dir: ${{ inputs.working_dir }}
 
 branding:
