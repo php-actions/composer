@@ -11,16 +11,19 @@ ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/mas
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && install-php-extensions"
 fi
 
+dockerfile_hash="php-${ACTION_PHP_VERSION}"
 for ext in $ACTION_PHP_EXTENSIONS
 do
 	dockerfile="${dockerfile} $ext"
+	dockerfile_hash="${dockerfile_hash}-${ext}"
 done
 
-# Tag the Docker build with a name that identifies the combination of extensions
-# so that each combination only needs to be built once.
-dockerfile_hash=($(echo "$dockerfile" | md5sum))
-docker_tag="php-actions/setup-php-$ACTION_PHP_VERSION":"${dockerfile_hash}"
+docker_tag="ghcr.io/php-actions/php-build:${dockerfile_hash}"
 echo "$docker_tag" > ./docker_tag
 
+echo "$ACTION_DOCKER_TOKEN" | docker login ghcr.io -u "$ACTION_DOCKER_TOKEN_USER" --password-stdin
+
+docker pull "$docker_tag" || echo "Remote tag does not exist"
+
 echo "$dockerfile" | docker build --tag "$docker_tag" -
-# TODO: We need to push the build to php-actions packages
+docker push "$docker_tag"
