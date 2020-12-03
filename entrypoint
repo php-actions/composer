@@ -38,6 +38,12 @@ then
 	md5sum /root/.ssh/id_rsa.pub
 fi
 
+if [ -n "$action_oauth_token" ]
+then
+	echo "Storing user oauth token"
+	composer config -g "$action_oauth_domain" "$action_oauth_token" 
+fi
+
 if [ -n "$action_command" ]
 then
 	command_string="$command_string $action_command"

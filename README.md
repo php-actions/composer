@@ -153,7 +153,10 @@ In the example above, the "key" is passed to the Cache action that consists of a
 Installing private repositories
 -------------------------------
 
-To install from a private repository, SSH authentication must be used. Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [deploy keys][deploy-keys]. 
+To install from a private repository, SSH or OAuth authentication must be used. 
+### SSH Authentication
+
+Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [HTTPS cloning with OAuth tokens][deploy-keys]. 
 
 Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `ssh_key` and `ssh_key_pub` inputs. If your private repository is stored on another server than github.com, you also need to pass the domain via `ssh_domain`.
 
@@ -173,7 +176,26 @@ jobs:
 ```
 
 There is an example repository available for reference at https://github.com/php-actions/example-composer that uses a private dependency. Check it out for a live working project.
+### OAuth Authentication
 
+Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [deploy keys][deploy-keys]. 
+
+Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `oauth_token` and `oauth_domain`.
+
+Example yaml, showing how to pass secrets:
+
+```yaml
+jobs:
+  build:
+
+    ...
+
+    - name: Install dependencies
+      uses: php-actions/composer@v2
+      with:
+        oauth_token: ${{ secrets.oauth_token }}
+        oauth_domain: github-oauth.github.com
+```
 ***
 
 If you found this repository helpful, please consider [sponsoring the developer][sponsor].
