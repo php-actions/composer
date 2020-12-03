@@ -124,25 +124,20 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: |
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
+  steps:
+    - name: Determine Composer cache directory
+      shell: bash
+      run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
 
-    - name: Cache Composer Downloads
+  steps:
+    - name: Cache dependencies installed with Composer
       uses: actions/cache@v2
       with:
-        path: vendor/
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        path: "${{ env.COMPOSER_CACHE_DIR }}"
+        key: os-${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-      
-    - name: Cache PHP dependencies
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          
+          os-${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+
     - uses: php-actions/composer@v4
 
     ...      
