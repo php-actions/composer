@@ -124,12 +124,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-  steps:
+    steps:
     - name: Determine Composer cache directory
       shell: bash
       run: "echo \"COMPOSER_CACHE_DIR=$(composer config cache-dir)\" >> $GITHUB_ENV"
 
-  steps:
+    steps:
     - name: Cache dependencies installed with Composer
       uses: actions/cache@v2
       with:
