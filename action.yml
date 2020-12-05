@@ -65,6 +65,14 @@ inputs:
     description: Use the given directory as working directory
     required: false
 
+  ghcr_token:
+    description: Use this username to authenticate against ghcr.io (for speedier builds)
+    required: false
+
+  ghcr_user:
+    description: Use this username to authenticate against ghcr.io (for speedier builds)
+    required: false
+
 outputs:
   composer_cache_dir:
     description: "Where composer created its cache"
@@ -92,8 +100,8 @@ runs:
         ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
         ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
-        ACTION_GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-        ACTION_GHCR_USER: ${{ secrets.GHCR_USER }}
+        ACTION_GHCR_TOKEN: ${{ inputs.ghcr_token }}
+        ACTION_GHCR_USER: ${{ inputs.ghcr_user }}
       id: composer_run
       run: ${{ github.action_path }}/setup-php.bash composer \
         && ${{ github.action_path }}/composer-action.bash
