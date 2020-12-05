@@ -21,10 +21,7 @@ done
 docker_tag="ghcr.io/php-actions/php-build:${dockerfile_hash}"
 echo "$docker_tag" > ./docker_tag
 
-if [ -n "$ACTION_GHCR_TOKEN" ] && [ -n "$ACTION_DOCKER_TOKEN" ]
-then
-	echo "$ACTION_DOCKER_TOKEN" | docker login ghcr.io -u "$ACTION_DOCKER_TOKEN_USER" --password-stdin
-fi
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
 
 docker pull "$docker_tag" || echo "Remote tag does not exist"
 
