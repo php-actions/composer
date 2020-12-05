@@ -18,7 +18,7 @@ do
 	dockerfile_hash="${dockerfile_hash}-${ext}"
 done
 
-docker_tag="ghcr.io/php-actions/php-build:${dockerfile_hash}"
+docker_tag="ghcr.io/php-actions/composer:${dockerfile_hash}"
 echo "$docker_tag" > ./docker_tag
 
 #echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
