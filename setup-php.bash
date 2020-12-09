@@ -30,7 +30,7 @@ done
 dockerfile_unique="${dockerfile_unique// /_}"
 dockerfile_unique="${dockerfile_unique,,}"
 
-docker_tag="docker.pkg.github.com/${base_repo}/php:${dockerfile_unique}"
+docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
 
 docker pull "$docker_tag" || echo "Remote tag does not exist"
