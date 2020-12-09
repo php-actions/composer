@@ -129,7 +129,6 @@ else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
 
-echo "Running composer v${detected_version}"
 echo "Command: $command_string"
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
