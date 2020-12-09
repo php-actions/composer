@@ -32,11 +32,14 @@ dockerfile_unique="${dockerfile_unique,,}"
 
 docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-${base_repo}:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
+echo "$docker_tag"
 
 docker pull "$docker_tag" || echo "Remote tag does not exist"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "${DIR}"
 echo "$dockerfile" > Dockerfile
+echo "Dockerfile:"
+echo "$dockerfile"
 docker build --tag "$docker_tag" .
 docker push "$docker_tag"
