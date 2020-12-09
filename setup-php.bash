@@ -19,7 +19,7 @@ ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/mas
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && install-php-extensions"
 fi
 
-dockerfile_unique="${ACTION_PHP_VERSION}"
+dockerfile_unique="${ACTION_PHP_VERSION}-${base_repo}"
 for ext in $ACTION_PHP_EXTENSIONS
 do
 	dockerfile="${dockerfile} $ext"
