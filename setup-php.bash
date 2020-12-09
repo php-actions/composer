@@ -3,7 +3,7 @@ set -e
 docker pull -q "php:$ACTION_PHP_VERSION"
 dockerfile="FROM php:$ACTION_PHP_VERSION"
 
-base_repo="php-actions/$1"
+base_repo="$1"
 echo "DEBUG: base_repo = $base_repo"
 echo "DEBUG: GITHUB_ACTOR = ${GITHUB_ACTOR}"
 echo "DEBUG: GITHUB_REPOSITORY = ${GITHUB_REPOSITORY}"
