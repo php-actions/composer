@@ -19,7 +19,7 @@ ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/mas
 RUN chmod +x /usr/local/bin/install-php-extensions && sync && install-php-extensions"
 fi
 
-dockerfile_unique="${ACTION_PHP_VERSION}-${base_repo}"
+dockerfile_unique="${ACTION_PHP_VERSION}"
 for ext in $ACTION_PHP_EXTENSIONS
 do
 	dockerfile="${dockerfile} $ext"
@@ -30,7 +30,7 @@ done
 dockerfile_unique="${dockerfile_unique// /_}"
 dockerfile_unique="${dockerfile_unique,,}"
 
-docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php:${dockerfile_unique}"
+docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-${base_repo}:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
 
 docker pull "$docker_tag" || echo "Remote tag does not exist"
