@@ -2,7 +2,7 @@
 set -e
 docker pull -q "php:$ACTION_PHP_VERSION"
 dockerfile="FROM php:$ACTION_PHP_VERSION
-RUN apt-get update && apt-get install -y unzip git"
+RUN apt-get update && apt-get install -y zip git"
 
 base_repo="$1"
 echo "DEBUG: base_repo = $base_repo"
