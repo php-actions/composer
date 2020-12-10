@@ -1,7 +1,5 @@
 #!/bin/bash
 set -e
-github_action_path=$(dirname "$0")
-cd "${github_action_path}"
 
 dockerfile="FROM php:$ACTION_PHP_VERSION
 RUN apt-get update && apt-get install -y zip git"
@@ -36,6 +34,9 @@ dockerfile_unique="${dockerfile_unique,,}"
 
 docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-${base_repo}:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
+
+github_action_path=$(dirname "$0")
+cd "${github_action_path}"
 
 echo "Pulling PHP..."
 docker pull -q "php:$ACTION_PHP_VERSION"
