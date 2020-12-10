@@ -30,6 +30,7 @@ do
 done
 
 # Remove illegal characters and make lowercase:
+GITHUB_REPOSITORY="${GITHUB_REPOSITORY,,}"
 dockerfile_unique="${dockerfile_unique// /_}"
 dockerfile_unique="${dockerfile_unique,,}"
 
