@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
-docker pull -q "php:$ACTION_PHP_VERSION"
+github_action_path=$(dirname "$0")
+cd "${github_action_path}"
+
 dockerfile="FROM php:$ACTION_PHP_VERSION
 RUN apt-get update && apt-get install -y zip git"
 
@@ -33,12 +35,12 @@ dockerfile_unique="${dockerfile_unique,,}"
 
 docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-${base_repo}:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
-echo "$docker_tag"
 
-docker pull "$docker_tag" || echo "Remote tag does not exist"
+echo "Pulling PHP..."
+docker pull -q "php:$ACTION_PHP_VERSION"
+echo "Pulling $docker_tag"
+docker pull -q "$docker_tag" || echo "Remote tag does not exist"
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "${DIR}"
 echo "$dockerfile" > Dockerfile
 echo "Dockerfile:"
 echo "$dockerfile"
