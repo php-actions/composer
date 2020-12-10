@@ -32,7 +32,7 @@ GITHUB_REPOSITORY="${GITHUB_REPOSITORY,,}"
 dockerfile_unique="${dockerfile_unique// /_}"
 dockerfile_unique="${dockerfile_unique,,}"
 
-docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-${base_repo}:${dockerfile_unique}"
+docker_tag="docker.pkg.github.com/${GITHUB_REPOSITORY}/php-actions_${base_repo}:${dockerfile_unique}"
 echo "$docker_tag" > ./docker_tag
 
 github_action_path=$(dirname "$0")
