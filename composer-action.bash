@@ -9,7 +9,7 @@ if [ "$ACTION_VERSION" == "latest" ]
 then
 	phar_url="${phar_url}/composer-stable.phar"
 else
-	phar_url="${phar_url}/download/${ACTION_VERSION}/composer.phar"
+	phar_url="${phar_url}/composer-${ACTION_VERSION}.phar"
 fi
 curl -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
