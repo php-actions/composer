@@ -57,8 +57,6 @@ cd "${github_action_path}"
 # Attempt to pull the existing Docker image, if it exists. If the image has
 # been pushed previously, this image should take preference and a new image
 # will not need to be built.
-echo "Pulling PHP..."
-docker pull -q "php:$ACTION_PHP_VERSION"
 echo "Pulling $docker_tag"
 docker pull -q "$docker_tag" || echo "Remote tag does not exist"
 
