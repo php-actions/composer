@@ -67,7 +67,7 @@ docker pull "$docker_tag" || echo "Remote tag does not exist"
 echo "$dockerfile" > Dockerfile
 echo "Dockerfile:"
 echo "$dockerfile"
-docker build --tag "$docker_tag" .
+docker build --tag "$docker_tag" --cache-from "$docker_tag" .
 # Update the user's repository with the customised docker image, ready for the
 # next Github Actions run.
 docker push "$docker_tag"
