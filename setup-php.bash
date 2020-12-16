@@ -30,7 +30,7 @@ fi
 
 # For each extension installed, we add the name to the end of the
 # dockerfile_unique variable, which is used to tag the Docker image.
-dockerfile_unique="${ACTION_PHP_VERSION}"
+dockerfile_unique="php-${ACTION_PHP_VERSION}"
 for ext in $ACTION_PHP_EXTENSIONS
 do
 	dockerfile="${dockerfile} $ext"
