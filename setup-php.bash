@@ -58,7 +58,7 @@ cd "${github_action_path}"
 # been pushed previously, this image should take preference and a new image
 # will not need to be built.
 echo "Pulling $docker_tag"
-docker pull -q "$docker_tag" || echo "Remote tag does not exist"
+docker pull "$docker_tag" || echo "Remote tag does not exist"
 
 # Save the dockerfile to a physical file on disk, then build the image, tagging
 # it with the unique tag. If the layers are already built, there should be no
