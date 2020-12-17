@@ -4,8 +4,8 @@ set -e
 # The dockerfile is created in-memory and written to disk at the end of this script.
 # Below, depending on the Action's inputs, more lines may be written to this dockerfile.
 # Zip and git are required for Composer to work correctly.
-dockerfile="FROM php:$ACTION_PHP_VERSION
-RUN apt-get update && apt-get install -y zip git"
+dockerfile="FROM php:${ACTION_PHP_VERSION}-cli-alpine
+RUN apk get zip git bash"
 
 base_repo="$1"
 echo "DEBUG: base_repo = $base_repo"
