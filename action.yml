@@ -90,7 +90,7 @@ runs:
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
         ACTION_TOKEN: ${{ github.token }}
       id: composer_run
-      run: ${{ github.action_path }}/setup-php.bash composer \
+      run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/master/php-build.bash) composer \
         && ${{ github.action_path }}/composer-action.bash
       shell: bash
 
