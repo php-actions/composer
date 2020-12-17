@@ -130,17 +130,16 @@ else
 fi
 
 echo "Command: $command_string"
-echo "DEBUG: Composer cache directory: ${RUNNER_WORKSPACE}/composer/cache"
-ls -la ${RUNNER_WORKSPACE}/composer/cache
+mkdir -p /tmp/composer-cache
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
 	--volume ~/.ssh:/root/.ssh \
-	--volume "${RUNNER_WORKSPACE}"/composer:/tmp \
 	--volume "${GITHUB_WORKSPACE}":/app \
+	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
-	${docker_tag} ${command_string}
+	${docker_tag} COMPOSER_CACHE_DIR="/tmp/composer-cache" ${command_string}
 
 echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
 echo "::set-output name=full_command::${command_string}"
