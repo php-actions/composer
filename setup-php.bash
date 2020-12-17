@@ -11,7 +11,7 @@ then
 fi
 base_image="${base_image}cli-alpine"
 dockerfile="FROM ${base_image}
-RUN apk get zip git bash"
+RUN apk add --update --no-cache zip git bash"
 
 base_repo="$1"
 echo "DEBUG: base_repo = $base_repo"
