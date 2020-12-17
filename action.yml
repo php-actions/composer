@@ -74,25 +74,25 @@ runs:
   using: "composite"
   steps:
     - env:
-        ACTION_VERSION: ${{ inputs.version }}
-        ACTION_PHP_VERSION: ${{ inputs.php_version }}
-        ACTION_PHP_EXTENSIONS: ${{ inputs.php_extensions }}
-        ACTION_COMMAND: ${{ inputs.command }}
-        ACTION_ONLY_ARGS: ${{ inputs.only_args }}
-        ACTION_INTERACTION: ${{ inputs.interaction }}
-        ACTION_DEV: ${{ inputs.dev }}
-        ACTION_PROGRESS: ${{ inputs.progress }}
-        ACTION_QUIET: ${{ inputs.quiet }}
-        ACTION_ARGS: ${{ inputs.args }}
-        ACTION_SSH_KEY: ${{ inputs.ssh_key }}
-        ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
-        ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
-        ACTION_WORKING_DIR: ${{ inputs.working_dir }}
-        ACTION_TOKEN: ${{ github.token }}
-      id: composer_run
-      run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/master/php-build.bash) composer \
-        && ${{ github.action_path }}/composer-action.bash
-      shell: bash
+      ACTION_VERSION: ${{ inputs.version }}
+      ACTION_PHP_VERSION: ${{ inputs.php_version }}
+      ACTION_PHP_EXTENSIONS: ${{ inputs.php_extensions }}
+      ACTION_TOKEN: ${{ github.token }}
+      ACTION_COMMAND: ${{ inputs.command }}
+      ACTION_ONLY_ARGS: ${{ inputs.only_args }}
+      ACTION_INTERACTION: ${{ inputs.interaction }}
+      ACTION_DEV: ${{ inputs.dev }}
+      ACTION_PROGRESS: ${{ inputs.progress }}
+      ACTION_QUIET: ${{ inputs.quiet }}
+      ACTION_ARGS: ${{ inputs.args }}
+      ACTION_SSH_KEY: ${{ inputs.ssh_key }}
+      ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
+      ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
+      ACTION_WORKING_DIR: ${{ inputs.working_dir }}
+    id: composer_run
+    run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/master/php-build.bash) composer \
+      && ${{ github.action_path }}/composer-action.bash
+    shell: bash
 
 branding:
   icon: 'package'  
