@@ -139,7 +139,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
-	--env COMPOSER_CACHE_DIR="/tmp/composer-cache"
+	--env COMPOSER_CACHE_DIR="/tmp/composer-cache" \
 	${docker_tag} ${command_string}
 
 echo "::set-output name=composer_cache_dir::${RUNNER_WORKSPACE}/composer/cache"
