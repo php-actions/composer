@@ -130,6 +130,8 @@ else
 fi
 
 echo "Command: $command_string"
+echo "DEBUG: Runner workspace: ${RUNNER_WORKSPACE}"
+echo "DEBUG: Github workspace: ${GITHUB_WORKSPACE}"
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
