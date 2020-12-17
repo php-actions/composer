@@ -66,10 +66,6 @@ inputs:
     required: false
 
 outputs:
-  composer_cache_dir:
-    description: "Where composer created its cache"
-    value: ${{ steps.composer_run.outputs.composer_cache_dir }}
-
   full_command:
     description: "The full command passed to docker to run"
     value: ${{ steps.composer_run.putputs.full_command }}
