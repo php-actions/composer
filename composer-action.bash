@@ -2,7 +2,7 @@
 set -e
 github_action_path=$(dirname "$0")
 docker_tag=$(cat ./docker_tag)
-echo "Docker tag: $docker_tag"
+echo "Docker tag: $docker_tag" >> output.log 2>&1
 
 phar_url="https://getcomposer.org"
 if [ "$ACTION_VERSION" == "latest" ]
@@ -11,7 +11,7 @@ then
 else
 	phar_url="${phar_url}/composer-${ACTION_VERSION}.phar"
 fi
-curl -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
+curl -H --silent "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
 
 # command_string is passed directly to the docker executable. It includes the
@@ -26,7 +26,7 @@ touch ~/.gitconfig
 
 if [ -n "$ACTION_SSH_KEY" ]
 then
-	echo "Storing private key file for root"
+	echo "Storing private key file for root" >> output.log 2>&1
 	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
 	ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
@@ -40,15 +40,15 @@ then
 	echo "$ACTION_SSH_KEY_PUB" > ~/.ssh/action_rsa.pub
 	chmod 600 ~/.ssh/action_rsa
 
-	echo "PRIVATE KEY:"
-	md5sum ~/.ssh/action_rsa
-	echo "PUBLIC KEY:"
-	md5sum ~/.ssh/action_rsa.pub
+	echo "PRIVATE KEY:" >> output.log 2>&1
+	md5sum ~/.ssh/action_rsa >> output.log 2>&1
+	echo "PUBLIC KEY:" >> output.log 2>&1
+	md5sum ~/.ssh/action_rsa.pub >> output.log 2>&1
 
 	echo "[core]" >> ~/.gitconfig
 	echo "sshCommand = \"ssh -i ~/.ssh/action_rsa\"" >> ~/.gitconfig
 else
-	echo "No private keys supplied"
+	echo "No private keys supplied" >> output.log 2>&1
 fi
 
 if [ -n "$ACTION_COMMAND" ]
@@ -129,7 +129,7 @@ else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
 
-echo "Command: $command_string"
+echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
 docker run --rm \
