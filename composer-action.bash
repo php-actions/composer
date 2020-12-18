@@ -11,7 +11,7 @@ then
 else
 	phar_url="${phar_url}/composer-${ACTION_VERSION}.phar"
 fi
-curl -H --silent "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
+curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
 
 # command_string is passed directly to the docker executable. It includes the
