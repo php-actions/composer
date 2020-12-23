@@ -1,14 +1,19 @@
-name: 'Composer (php-actions)'
-description: 'Use the Composer CLI in your Github Actions.'
+name: Composer (php-actions)
+description: Use the Composer CLI in your Github Actions.
+
 inputs:
+  version:
+    description: What version of Composer to use
+    default: latest
+    required: false
+
   php_version:
     description: What version of PHP to use
     default: latest
     required: false
 
-  composer_version:
-    description: What version of Composer to use
-    default: latest
+  php_extensions:
+    description: Space separated list of extensions to configure with the PHP build
     required: false
 
   command:
@@ -22,11 +27,6 @@ inputs:
 
   interaction:
     description: "Whether to ask any interactive questions. Values: 'yes' or 'no'"
-    required: false
-    default: no
-
-  suggest:
-    description: "Whether to show package suggestions. Values: 'yes' or 'no'"
     required: false
     default: no
 
@@ -61,41 +61,38 @@ inputs:
     description: The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
     required: false
 
-  oauth_token:
-    description: The user oauth key to use for private repositories
-    required: false
-
-  oauth_domain:
-    description: The oauth domain to gather oauth_token for
-    required: false
-
   working_dir:
     description: Use the given directory as working directory
     required: false
 
 outputs:
-  time:
-    description: 'The time the action was run'
+  full_command:
+    description: "The full command passed to docker to run"
+    value: ${{ steps.composer_run.putputs.full_command }}
+
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  env:
-    action_php_version: ${{ inputs.php_version }}
-    action_composer_version: ${{ inputs.composer_version }}
-    action_command: ${{ inputs.command }}
-    action_only_args: ${{ inputs.only_args }}
-    action_interaction: ${{ inputs.interaction }}
-    action_suggest: ${{ inputs.suggest }}
-    action_dev: ${{ inputs.dev }}
-    action_progress: ${{ inputs.progress }}
-    action_quiet: ${{ inputs.quiet }}
-    action_args: ${{ inputs.args }}
-    action_ssh_key: ${{ inputs.ssh_key }}
-    action_ssh_key_pub: ${{ inputs.ssh_key_pub }}
-    action_ssh_domain: ${{ inputs.ssh_domain }}
-    action_oauth_token: ${{ inputs.oauth_token }}
-    action_oauth_domain: ${{ inputs.oauth_domain }}
-    action_working_dir: ${{ inputs.working_dir }}
+  using: "composite"
+  steps:
+    - env:
+        ACTION_VERSION: ${{ inputs.version }}
+        ACTION_PHP_VERSION: ${{ inputs.php_version }}
+        ACTION_PHP_EXTENSIONS: ${{ inputs.php_extensions }}
+        ACTION_TOKEN: ${{ github.token }}
+        ACTION_COMMAND: ${{ inputs.command }}
+        ACTION_ONLY_ARGS: ${{ inputs.only_args }}
+        ACTION_INTERACTION: ${{ inputs.interaction }}
+        ACTION_DEV: ${{ inputs.dev }}
+        ACTION_PROGRESS: ${{ inputs.progress }}
+        ACTION_QUIET: ${{ inputs.quiet }}
+        ACTION_ARGS: ${{ inputs.args }}
+        ACTION_SSH_KEY: ${{ inputs.ssh_key }}
+        ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
+        ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
+        ACTION_WORKING_DIR: ${{ inputs.working_dir }}
+      id: composer_run
+      run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/cc563958b37b62874df04de865e5e9c6d8bb93dd/php-build.bash) composer \
+        && ${{ github.action_path }}/composer-action.bash
+      shell: bash
 
 branding:
   icon: 'package'  
