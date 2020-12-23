@@ -91,7 +91,7 @@ runs:
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
       id: composer_run
       run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/cc563958b37b62874df04de865e5e9c6d8bb93dd/php-build.bash) composer \
-        && ${{ github.action_path }}/composer-action.bash
+        && ${{ github.action_path }}/composer-action.bash || { cat ${{ github.workspace }}/output.log ; exit 1; }
       shell: bash
 
 branding:
