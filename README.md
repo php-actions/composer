@@ -25,14 +25,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: php-actions/composer@v4
+    - uses: php-actions/composer@v5
     # ... then your own project steps ...
 ```
 
 Running custom commands
 -----------------------
 
-By default, adding `- uses: php-actions/composer@v4` into your workflow will run `composer install`, as `install` is the default command name. The install command will be provided with a default set of arguments (see below).
+By default, adding `- uses: php-actions/composer@v5` into your workflow will run `composer install`, as `install` is the default command name. The install command will be provided with a default set of arguments (see below).
 
 You can issue custom commands by passing a `command` input, like so:
 
@@ -43,7 +43,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v4
+      uses: php-actions/composer@v5
       with:
         command: your-command-here
 ```
@@ -73,7 +73,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v4
+      uses: php-actions/composer@v5
       with:
         dev: no
         args: --profile --ignore-platform-reqs
@@ -97,7 +97,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v4
+      uses: php-actions/composer@v5
       with:
         php_version: 7.1
         composer_version: 1
@@ -141,7 +141,7 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           
-    - uses: php-actions/composer@v4
+    - uses: php-actions/composer@v5
 
     ...      
 ```
@@ -164,7 +164,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v2
+      uses: php-actions/composer@v5
       with:
         ssh_key: ${{ secrets.ssh_key }}
         ssh_key_pub: ${{ secrets.ssh_key_pub }}
