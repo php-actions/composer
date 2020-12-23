@@ -108,7 +108,7 @@ Caching dependencies for faster builds
 
 Github actions supports dependency caching, allowing Composer downloads to be cached between workflows, as long as the `composer.lock` file has not changed. This produces much faster builds, as the `composer install` command does not have to download files over the network at all if the cache is valid.
 
-Example workflow (taken from https://github.com/PhpGt/Dom):
+Example workflow (taken from https://github.com/PhpGt/Database):
 
 ```yaml
 name: CI
@@ -121,26 +121,13 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: |
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-    - name: Cache Composer Downloads
-      uses: actions/cache@v2
-      with:
-        path: vendor/
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+    - name: Cache Composer dependencies
+       uses: actions/cache@v2
+         with:
+           path: /tmp/composer-cache
+           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       
-    - name: Cache PHP dependencies
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          
     - uses: php-actions/composer@v5
 
     ...      
