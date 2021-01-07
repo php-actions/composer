@@ -60,7 +60,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 + `php_version` - Choose which version of PHP you want to use (7.1, 7.2, 7.3, 7.4 or 8.0)
-+ `composer_version` - Choose which version of Composer you want to use (1 or 2)
++ `version` - Choose which version of Composer you want to use (1 or 2)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
@@ -87,7 +87,7 @@ This action runs on a custom base image, available at https://github.com/php-act
 Use the following inputs to run a specific PHP/Composer version combination:
 
 + `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0` (default: `latest` aka: `7.4`)
-+ `composer_version` Available versions: `1`, `2` (default: `latest` aka: `2`)
++ `version` Available versions: `1`, `2` (default: `latest` aka: `2`)
 
 Example configuration that runs Composer version 1 on PHP version 7.1:
 ```yaml
@@ -100,7 +100,7 @@ jobs:
       uses: php-actions/composer@v5
       with:
         php_version: 7.1
-        composer_version: 1
+        version: 1
 ```
 
 Caching dependencies for faster builds
