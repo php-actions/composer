@@ -159,6 +159,42 @@ jobs:
 
 There is an example repository available for reference at https://github.com/php-actions/example-composer that uses a private dependency. Check it out for a live working project.
 
+### HTTP basic authentication
+
+It's recommended to use SSH keys for authentication, but sometimes HTTP basic authentication is the only tool available at the time. In order to use this authentication mechanism as securely as possible, please follow these steps:
+
+1) Create a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) for the Github account you wish to authenticate with.
+
+2) Add the following JSON to a new Github Secret called `COMPOSER_AUTH_JSON`:
+
+```json
+{
+  "http-basic": {
+    "github.com": {
+      "username": "<YOUR_GITHUB_USERNAME>",
+      "password": "<YOUR_PERSONAL_ACCESS_TOKEN"
+    }
+  }
+}
+```
+
+3) Pass this secret to auth.json as a separate action step within your Yaml config:
+
+```yaml
+jobs:
+  build:
+
+    ...
+    
+    - name: Add HTTP basic auth credentials
+      run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+
+    - name: Install dependencies
+      uses: php-actions/composer@v5
+```
+
+4) Now, any connections Composer makes to Github.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
+
 ***
 
 If you found this repository helpful, please consider [sponsoring the developer][sponsor].
