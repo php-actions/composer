@@ -123,10 +123,10 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Cache Composer dependencies
-       uses: actions/cache@v2
-         with:
-           path: /tmp/composer-cache
-           key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+      uses: actions/cache@v2
+      with:
+        path: /tmp/composer-cache
+        key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       
     - uses: php-actions/composer@v5
 
