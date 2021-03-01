@@ -133,6 +133,7 @@ echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
 export COMPOSER_CACHE_DIR="/tmp/composer-cache"
+echo "Starting..."
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
