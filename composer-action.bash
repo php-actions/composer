@@ -133,6 +133,8 @@ echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
 export COMPOSER_CACHE_DIR="/tmp/composer-cache"
+unset ACTION_SSH_KEY
+unset ACTION_SSH_KEY_PUB
 echo "Starting..."
 
 docker run --rm \
