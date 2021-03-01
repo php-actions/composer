@@ -132,10 +132,7 @@ fi
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
-docker_env=/tmp/docker_env
-printenv > $docker_env
-cat $docker_env
-echo COMPOSER_CACHE_DIR="/tmp/composer-cache" >> $docker_env
+export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
@@ -144,7 +141,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
-	--env-file "$docker_env" \
+	--env-file <( env| cut -f1 -d= ) \
 	${docker_tag} ${command_string}
 
 echo "::set-output name=full_command::${command_string}"
