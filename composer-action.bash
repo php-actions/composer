@@ -134,6 +134,7 @@ mkdir -p /tmp/composer-cache
 
 docker_env=/tmp/docker_env
 printenv | tr '\n' ' ' > $docker_env
+cat $docker_env
 echo COMPOSER_CACHE_DIR="/tmp/composer-cache" >> $docker_env
 
 docker run --rm \
