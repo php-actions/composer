@@ -172,7 +172,7 @@ It's recommended to use SSH keys for authentication, but sometimes HTTP basic au
   "http-basic": {
     "github.com": {
       "username": "<YOUR_GITHUB_USERNAME>",
-      "password": "<YOUR_PERSONAL_ACCESS_TOKEN"
+      "password": "<YOUR_PERSONAL_ACCESS_TOKEN>"
     }
   }
 }
