@@ -103,6 +103,28 @@ jobs:
         version: 1
 ```
 
+
+Including PHP Extensions
+-------------------------------------------
+
+This action includes the [extensions that Composer suggests](https://github.com/composer/composer/blob/master/composer.json#L44) by default. To include additional PHP extensions in your action steps, set the `php_extensions` input with any of the [supported extension names](https://github.com/mlocati/docker-php-extension-installer#supported-php-extensions) separated by spaces.
+
+Example configuration that runs Composer version 2 on PHP version 7.4 with the Redis and Exif extensions enabled:
+
+```yaml
+jobs:
+  build:
+
+    ...
+
+    - name: Install dependencies
+      uses: php-actions/composer@v5
+      with:
+        php_version: 7.4
+        php_extensions: redis exif
+        version: 2
+```
+
 Caching dependencies for faster builds
 --------------------------------------
 
