@@ -65,6 +65,10 @@ inputs:
     description: Use the given directory as working directory
     required: false
 
+  memory_limit:
+    description: Sets the composer memory limit
+    required: false
+
 outputs:
   full_command:
     description: "The full command passed to docker to run"
@@ -89,6 +93,7 @@ runs:
         ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
         ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
+        ACTION_MEMORY_LIMIT: ${{ inputs.memory_limit }}
       id: composer_run
       run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/330b13bbb1eadd05bbb627477c1549cd7e62e406/php-build.bash) composer \
         && ${{ github.action_path }}/composer-action.bash || { cat ${{ github.workspace }}/output.log ; exit 1; }

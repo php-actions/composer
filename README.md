@@ -61,6 +61,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 + `php_version` - Choose which version of PHP you want to use (7.1, 7.2, 7.3, 7.4 or 8.0)
 + `version` - Choose which version of Composer you want to use (1 or 2)
++ `memory_limit` - Sets the composer memory limit - (default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
