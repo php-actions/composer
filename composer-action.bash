@@ -131,7 +131,9 @@ fi
 
 if [ -n "$ACTION_MEMORY_LIMIT" ]
 then
-  command_string="COMPOSER_MEMORY_LIMIT=$ACTION_MEMORY_LIMIT $command_string"
+  memory_limit="--env COMPOSER_MEMORY_LIMIT=$ACTION_MEMORY_LIMIT"
+else
+  memory_limit=''
 fi
 
 echo "Command: $command_string" >> output.log 2>&1
@@ -149,6 +151,7 @@ docker run --rm \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
 	--env-file <( env| cut -f1 -d= ) \
+	${memory_limit} \
 	${docker_tag} ${command_string}
 
 echo "::set-output name=full_command::${command_string}"
