@@ -129,6 +129,11 @@ else
 	command_string="$command_string $ACTION_ONLY_ARGS"
 fi
 
+if [ -n "$ACTION_MEMORY_LIMIT" ]
+then
+  command_string="COMPOSER_MEMORY_LIMIT=$ACTION_MEMORY_LIMIT $command_string"
+fi
+
 echo "Command: $command_string" >> output.log 2>&1
 mkdir -p /tmp/composer-cache
 
