@@ -90,7 +90,7 @@ runs:
         ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
       id: composer_run
-      run: bash <(curl -s https://github.com/php-actions/php-build/blob/v2.1.0/php-build.bash) composer \
+      run: bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/v2.1.0/php-build.bash) composer \
         && ${{ github.action_path }}/composer-action.bash || { cat ${{ github.workspace }}/output.log ; exit 1; }
       shell: bash
 
