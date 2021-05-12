@@ -137,8 +137,8 @@ unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
 echo "*************DEBUG******************"
-echo "contents of GITHUB_ENV file:"
-cat GITHUB_ENV
+echo "contents of GITHUB_ENV ($GITHUB_ENV):"
+cat $GITHUB_ENV
 echo "*************/DEBUG******************"
 
 docker run --rm \
