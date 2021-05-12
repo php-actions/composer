@@ -136,6 +136,11 @@ export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
+echo "*************DEBUG******************"
+echo "contents of GITHUB_ENV file:"
+cat GITHUB_ENV
+echo "*************/DEBUG******************"
+
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
