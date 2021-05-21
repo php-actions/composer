@@ -148,9 +148,15 @@ while IFS= read -r line
 do
 	key=$(echo "$line" | cut -f1 -d=)
 	if printf '%s\n' "${envHostKeys[@]}" | grep -q -P "^${key}\$"; then
-    		echo "$line"
+    		echo "Skipping $line"
+	else
+		echo "Adding $line"
+		echo "$line" >> DOCKER_ENV
 	fi
 done <<<$(docker run --rm "${docker_tag}" env)
+
+echo "Output of DOCKER_ENV:"
+cat ./DOCKER_ENV
 
 exit
 
