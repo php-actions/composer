@@ -146,7 +146,7 @@ echo "KEYS NOT IN DOCKER:"
 
 while IFS= read -r line
 do
-	if [[ ! " ${envHostKeys[@]} " =~ " ${line} " ]]
+	if [[ " ${envHostKeys[@]} " =~ " ${line} " ]]
 	then
 	    echo $line
 	fi
