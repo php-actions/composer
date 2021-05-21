@@ -148,15 +148,9 @@ do
 	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"; then
     		echo "Skipping $line"
 	else
-		echo "Adding $line"
 		echo "$line" >> DOCKER_ENV
 	fi
 done <<<$(env)
-
-echo "Output of DOCKER_ENV:"
-cat ./DOCKER_ENV
-
-exit
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
@@ -165,7 +159,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
-	--env-file <( env| cut -f1 -d= ) \
+	--env-file ./DOCKER_ENV \
 	${docker_tag} ${command_string}
 
 echo "::set-output name=full_command::${command_string}"
