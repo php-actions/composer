@@ -145,8 +145,9 @@ done <<<$(docker run --rm "${docker_tag}" env)
 while IFS= read -r line
 do
 	key=$(echo "$line" | cut -f1 -d=)
-	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"; then
-    		echo "Skipping $line"
+	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"
+	then
+    		echo "Skipping env variable $key" >> output.log
 	else
 		echo "$line" >> DOCKER_ENV
 	fi
