@@ -146,9 +146,9 @@ echo "KEYS NOT IN DOCKER:"
 
 while IFS= read -r line
 do
-	if [[ " ${envHostKeys[@]} " =~ " ${line} " ]]
-	then
-	    echo $line
+	key=$(echo "$line" | cut -f1 -d=)
+	if printf '%s\n' "${envHostKeys[@]}" | grep -q -P "^${key}\$"; then
+    		echo "$line"
 	fi
 done <<<$(docker run --rm "${docker_tag}" env)
 
