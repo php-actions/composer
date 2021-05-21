@@ -142,7 +142,13 @@ do
 	envHostKeys+=( $(echo "$line" | cut -f1 -d=) )
 done <<<$(env)
 
-echo "KEYS NOT IN DOCKER:"
+echo "Host keys:"
+for key in "${envHostKeys[@]}"
+do
+	echo "Host: $key"
+done
+
+echo "**********************************"
 
 while IFS= read -r line
 do
