@@ -136,9 +136,21 @@ export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
+hostEnv=$(env)
 dockerEnv=$(docker run --rm ${docker_tag} env)
 echo "Environment variables within Docker:"
-echo $dockerEnv
+while IFS= read -r line
+do
+	echo "... $line ..."
+done <<<$dockerEnv
+
+echo "********************************************"
+echo "Environment variables within Host:"
+while IFS= read -r line
+do
+	echo "... $line ..."
+done <<<$hostEnv
+
 exit
 
 docker run --rm \
