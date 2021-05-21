@@ -136,30 +136,22 @@ export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
-envHostKeys=()
+dockerKeys=()
 while IFS= read -r line
 do
-	envHostKeys+=( $(echo "$line" | cut -f1 -d=) )
-done <<<$(env)
-
-echo "Host keys:"
-for key in "${envHostKeys[@]}"
-do
-	echo "Host: $key"
-done
-
-echo "**********************************"
+	dockerKeys+=( $(echo "$line" | cut -f1 -d=) )
+done <<<$(docker run --rm "${docker_tag}" env)
 
 while IFS= read -r line
 do
 	key=$(echo "$line" | cut -f1 -d=)
-	if printf '%s\n' "${envHostKeys[@]}" | grep -q -P "^${key}\$"; then
+	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"; then
     		echo "Skipping $line"
 	else
 		echo "Adding $line"
 		echo "$line" >> DOCKER_ENV
 	fi
-done <<<$(docker run --rm "${docker_tag}" env)
+done <<<$(env)
 
 echo "Output of DOCKER_ENV:"
 cat ./DOCKER_ENV
