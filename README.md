@@ -25,14 +25,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: php-actions/composer@v5
+    - uses: php-actions/composer@v6
     # ... then your own project steps ...
 ```
+
+### Version numbers
+
+This action is released with semantic version numbers, but also tagged so the latest major release's tag always points to the latest release within the matching major version.
+
+Please feel free to use `uses: php-actions/composer@v6` to always run the latest version of v6, or `uses: php-actions/composer@v6.0.0` to specify the exact release.
+
 
 Running custom commands
 -----------------------
 
-By default, adding `- uses: php-actions/composer@v5` into your workflow will run `composer install`, as `install` is the default command name. The install command will be provided with a default set of arguments (see below).
+By default, adding `- uses: php-actions/composer@v6` into your workflow will run `composer install`, as `install` is the default command name. The install command will be provided with a default set of arguments (see below).
 
 You can issue custom commands by passing a `command` input, like so:
 
@@ -43,7 +50,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         command: your-command-here
 ```
@@ -74,7 +81,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         dev: no
         args: --profile --ignore-platform-reqs
@@ -98,7 +105,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         php_version: 7.1
         version: 1
@@ -119,7 +126,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         php_version: 7.4
         php_extensions: redis exif
@@ -151,7 +158,7 @@ jobs:
         path: /tmp/composer-cache
         key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
       
-    - uses: php-actions/composer@v5
+    - uses: php-actions/composer@v6
 
     ...      
 ```
@@ -174,7 +181,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
       with:
         ssh_key: ${{ secrets.ssh_key }}
         ssh_key_pub: ${{ secrets.ssh_key_pub }}
@@ -213,7 +220,7 @@ jobs:
       run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
     - name: Install dependencies
-      uses: php-actions/composer@v5
+      uses: php-actions/composer@v6
 ```
 
 4) Now, any connections Composer makes to Github.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
