@@ -143,6 +143,23 @@ export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
+dockerKeys=()
+while IFS= read -r line
+do
+	dockerKeys+=( $(echo "$line" | cut -f1 -d=) )
+done <<<$(docker run --rm "${docker_tag}" env)
+
+while IFS= read -r line
+do
+	key=$(echo "$line" | cut -f1 -d=)
+	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"
+	then
+    		echo "Skipping env variable $key" >> output.log
+	else
+		echo "$line" >> DOCKER_ENV
+	fi
+done <<<$(env)
+
 echo "::set-output name=full_command::${command_string}"
 
 docker run --rm \
@@ -152,7 +169,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
+	--env-file ./DOCKER_ENV \
 	--network host \
-	--env-file <( env| cut -f1 -d= ) \
 	${memory_limit} \
 	${docker_tag} ${command_string}
