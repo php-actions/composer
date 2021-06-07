@@ -143,6 +143,8 @@ export COMPOSER_CACHE_DIR="/tmp/composer-cache"
 unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
+echo "::set-output name=full_command::${command_string}"
+
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
@@ -154,5 +156,3 @@ docker run --rm \
 	--env-file <( env| cut -f1 -d= ) \
 	${memory_limit} \
 	${docker_tag} ${command_string}
-
-echo "::set-output name=full_command::${command_string}"
