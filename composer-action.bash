@@ -150,6 +150,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir /app \
+	--network host \
 	--env-file <( env| cut -f1 -d= ) \
 	${memory_limit} \
 	${docker_tag} ${command_string}
