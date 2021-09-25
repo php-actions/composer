@@ -208,7 +208,7 @@ It's recommended to use SSH keys for authentication, but sometimes HTTP basic au
 }
 ```
 
-3) Pass this secret to auth.json as a separate action step within your Yaml config:
+3) Pass this secret to auth.json as a separate action step within your Yaml config, and remove auth.json to prevent deploying it:
 
 ```yaml
 jobs:
@@ -221,6 +221,9 @@ jobs:
 
     - name: Install dependencies
       uses: php-actions/composer@v6
+      
+    - name: Remove auth.json file
+      run: rm -f $GITHUB_WORKSPACE/auth.json
 ```
 
 4) Now, any connections Composer makes to Github.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
