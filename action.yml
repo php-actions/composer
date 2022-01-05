@@ -72,7 +72,7 @@ inputs:
 outputs:
   full_command:
     description: "The full command passed to docker to run"
-    value: ${{ steps.composer_run.putputs.full_command }}
+    value: ${{ steps.composer_run.outputs.full_command }}
 
 runs:
   using: "composite"
