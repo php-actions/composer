@@ -97,6 +97,8 @@ Use the following inputs to run a specific PHP/Composer version combination:
 + `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0` (default: `latest` aka: `8.0`)
 + `version` Available versions: `1`, `2` (default: `latest` aka: `2`)
 
+Make sure to put the PHP version number in quotes, otherwise YAML will interpret e.g. `8.0` as `8` which means latest 8.x, not 8.0.
+
 Example configuration that runs Composer version 1 on PHP version 7.1:
 ```yaml
 jobs:
@@ -107,7 +109,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php_version: 7.1
+        php_version: "7.1"
         version: 1
 ```
 
@@ -128,7 +130,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php_version: 7.4
+        php_version: "7.4"
         php_extensions: redis exif
         version: 2
 ```
