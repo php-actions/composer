@@ -1,23 +1,23 @@
-name: Composer (php-actions)
-description: Use the Composer CLI in your Github Actions.
+name: "Composer (php-actions)"
+description: "Use the Composer CLI in your Github Actions."
 
 inputs:
   version:
-    description: What version of Composer to use
+    description: "What version of Composer to use"
     default: latest
     required: false
 
   php_version:
-    description: What version of PHP to use
+    description: "What version of PHP to use"
     default: latest
     required: false
 
   php_extensions:
-    description: Space separated list of extensions to configure with the PHP build
+    description: "Space separated list of extensions to configure with the PHP build"
     required: false
 
   command:
-    description: Composer command to run
+    description: "Composer command to run"
     required: true
     default: install
 
@@ -46,27 +46,27 @@ inputs:
     default: no
 
   args:
-    description: Optional arguments to pass
+    description: "Optional arguments to pass"
     required: false
 
   ssh_key:
-    description: The private key contents to use for private repositories
+    description: "The private key contents to use for private repositories"
     required: false
 
   ssh_key_pub:
-    description: The public key contents to use for private repositories
+    description: "The public key contents to use for private repositories"
     required: false
 
   ssh_domain:
-    description: The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
+    description: "The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)"
     required: false
 
   working_dir:
-    description: Use the given directory as working directory
+    description: "Use the given directory as working directory"
     required: false
 
   memory_limit:
-    description: Sets the composer memory limit
+    description: "Sets the composer memory limit"
     required: false
 
 outputs:
