@@ -67,7 +67,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 + `php_version` - Choose which version of PHP you want to use (7.1, 7.2, 7.3, 7.4 or 8.0)
-+ `version` - Choose which version of Composer you want to use (1 or 2)
++ `version` - Choose which version of Composer you want to use (1.x, 2.x, 2.2.x, latest)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
@@ -81,7 +81,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v6
+      uses: php-actions/composer@v7
       with:
         dev: no
         args: --profile --ignore-platform-reqs
@@ -94,8 +94,8 @@ This action runs on a custom base image, available at https://github.com/php-act
 
 Use the following inputs to run a specific PHP/Composer version combination:
 
-+ `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0` (default: `latest` aka: `8.0`)
-+ `version` Available versions: `1`, `2` (default: `latest` aka: `2`)
++ `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1` (default: `latest` aka: `8.1`)
++ `version` Available versions: `1.x`, `2.x`, `2.2.x` (default: `latest` aka: `2.x`)
 
 Make sure to put the PHP version number in quotes, otherwise YAML will interpret e.g. `8.0` as `8` which means latest 8.x, not 8.0.
 
@@ -132,7 +132,7 @@ jobs:
       with:
         php_version: "7.4"
         php_extensions: redis exif
-        version: 2
+        version: 2.x
 ```
 
 Caching dependencies for faster builds
