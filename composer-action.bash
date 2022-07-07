@@ -4,12 +4,15 @@ github_action_path=$(dirname "$0")
 docker_tag=$(cat ./docker_tag)
 echo "Docker tag: $docker_tag" >> output.log 2>&1
 
-phar_url="https://getcomposer.org/download/${ACTION_VERSION}"
+phar_url="https://getcomposer.org/download/"
 if [ "$ACTION_VERSION" == "latest" ]
 then
-	phar_url="${phar_url}-stable/composer.phar"
+	phar_url="${phar_url}${ACTION_VERSION}-stable/composer.phar"
+elif [[ "$ACTION_VERSION" == "x" ]
+then
+	phar_url="${phar_url}latest-${ACTION_VERSION}/composer.phar"
 else
-	phar_url="${phar_url}/composer.phar"
+	phar_url="${phar_url}${ACTION_VERSION}/composer.phar"
 fi
 curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
