@@ -8,7 +8,7 @@ phar_url="https://getcomposer.org/download/"
 if [ "$ACTION_VERSION" == "latest" ]
 then
 	phar_url="${phar_url}${ACTION_VERSION}-stable/composer.phar"
-elif [[ "$ACTION_VERSION" == "x" ]
+elif [[ "$ACTION_VERSION" == *"x"* ]]
 then
 	phar_url="${phar_url}latest-${ACTION_VERSION}/composer.phar"
 else
