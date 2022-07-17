@@ -81,7 +81,7 @@ jobs:
     ...
 
     - name: Install dependencies
-      uses: php-actions/composer@v7
+      uses: php-actions/composer@v6
       with:
         dev: no
         args: --profile --ignore-platform-reqs
