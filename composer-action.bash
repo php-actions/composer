@@ -19,11 +19,11 @@ else
 		;;
 		# get the latest snapshot
 		Snapshot | snapshot)
-		phar_url="${phar_url}/composer.phar"
+		phar_url="${phar_url}composer.phar"
 		;;
 		# get the latest version of the v1 tree
 		1 | 1.x)
-		phar_url="${phar_url}download/latest-2.x/composer.phar"
+		phar_url="${phar_url}download/latest-1.x/composer.phar"
 		;;
 		# get the latest version of the v2 tree
 		2 | 2.x)
