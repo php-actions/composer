@@ -160,7 +160,7 @@ do
 	fi
 done <<<$(env)
 
-echo "name=full_command::${command_string} >> $GITHUB_OUTPUT"
+echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
