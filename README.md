@@ -95,7 +95,7 @@ This action runs on a custom base image, available at https://github.com/php-act
 Use the following inputs to run a specific PHP/Composer version combination:
 
 + `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1` (default: `latest` aka: `8.1`)
-+ `version` Available versions: `1.x`, `2.x`, `2.2.x` (default: `latest` aka: `2.x`)
++ `version` Available versions: `latest`, `preview`, `snapshot`, `1.x`, `2.x`, `2.2.x` or the exact version (default: `latest`)
 
 Make sure to put the PHP version number in quotes, otherwise YAML will interpret e.g. `8.0` as `8` which means latest 8.x, not 8.0.
 

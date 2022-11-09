@@ -4,12 +4,41 @@ github_action_path=$(dirname "$0")
 docker_tag=$(cat ./docker_tag)
 echo "Docker tag: $docker_tag" >> output.log 2>&1
 
-phar_url="https://getcomposer.org/download/latest-"
-if [ "$ACTION_VERSION" == "latest" ]
+phar_url="https://getcomposer.org/"
+# check if $ACTION_VERSION is not set or empty or set to latest
+if [ -z "$ACTION_VERSION" ] || [ "$ACTION_VERSION" == "latest" ];
 then
-	phar_url="${phar_url}stable/composer.phar"
+	# if a version is not set, use latest composer version
+	phar_url="${phar_url}download/latest-stable/composer.phar"
 else
-	phar_url="${phar_url}${ACTION_VERSION}/composer.phar"
+	# if a version is set, choose the correct download
+	case "$ACTION_VERSION" in
+		# get the latest preview
+		Preview | preview)
+		phar_url="${phar_url}download/latest-preview/composer.phar"
+		;;
+		# get the latest snapshot
+		Snapshot | snapshot)
+		phar_url="${phar_url}composer.phar"
+		;;
+		# get the latest version of the v1 tree
+		1 | 1.x)
+		phar_url="${phar_url}download/latest-1.x/composer.phar"
+		;;
+		# get the latest version of the v2 tree
+		2 | 2.x)
+		phar_url="${phar_url}download/latest-2.x/composer.phar"
+		;;
+		# get the latest version of the v2.2 tree
+		2.2 | 2.2.x)
+		phar_url="${phar_url}download/latest-2.2.x/composer.phar"
+		;;
+		# if the version is not one of the above, assume that it is a exact
+		# naming, possibly with additions (RC, beta1, ...)
+		*)
+		phar_url="${phar_url}download/${ACTION_VERSION}/composer.phar"
+		;;
+	esac
 fi
 curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L "$phar_url" > "${github_action_path}/composer.phar"
 chmod +x "${github_action_path}/composer.phar"
