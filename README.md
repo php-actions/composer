@@ -197,38 +197,23 @@ It's recommended to use SSH keys for authentication, but sometimes HTTP basic au
 
 1) Create a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) for the Github account you wish to authenticate with.
 
-2) Add the following JSON to a new Github Secret called `COMPOSER_AUTH_JSON`:
+2) Create a new GitHub Secret called `PAT` with a value of personal access token.
 
-```json
-{
-  "http-basic": {
-    "github.com": {
-      "username": "<YOUR_GITHUB_USERNAME>",
-      "password": "<YOUR_PERSONAL_ACCESS_TOKEN>"
-    }
-  }
-}
-```
-
-3) Pass this secret to auth.json as a separate action step within your Yaml config, and remove auth.json to prevent deploying it:
+3) Pass this secret to COMPOSER_AUTH variable:
 
 ```yaml
 jobs:
   build:
 
     ...
-    
-    - name: Add HTTP basic auth credentials
-      run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
     - name: Install dependencies
       uses: php-actions/composer@v6
-      
-    - name: Remove auth.json file
-      run: rm -f $GITHUB_WORKSPACE/auth.json
+      env:
+        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.PAT }}"} }'
 ```
 
-4) Now, any connections Composer makes to Github.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
+4) Now, any connections Composer makes to GitHub.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
 
 ***
 
