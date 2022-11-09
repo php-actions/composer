@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: php-actions/composer@v6
     # ... then your own project steps ...
 ```
@@ -152,10 +152,10 @@ jobs:
     runs-on: [ubuntu-latest]
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Cache Composer dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: /tmp/composer-cache
         key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
