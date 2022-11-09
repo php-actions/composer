@@ -62,7 +62,12 @@ then
 
 	if [ -n "$ACTION_SSH_DOMAIN" ]
 	then
-		ssh-keyscan -t rsa "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
+		if [ -n "$ACTION_SSH_PORT" ]
+		then
+			ssh-keyscan -t rsa -p $ACTION_SSH_PORT "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
+                else
+			ssh-keyscan -t rsa "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
+		fi
 	fi
 
 	echo "$ACTION_SSH_KEY" > ~/.ssh/action_rsa

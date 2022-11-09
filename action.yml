@@ -61,6 +61,10 @@ inputs:
     description: The domain to gather SSH public keys for (automatic for github.com, gitlab.com, bitbucket.org)
     required: false
 
+  ssh_port:
+    description: Custom port to use in conjunction with ssh_domain
+    required: false
+
   working_dir:
     description: Use the given directory as working directory
     required: false
@@ -92,6 +96,7 @@ runs:
         ACTION_SSH_KEY: ${{ inputs.ssh_key }}
         ACTION_SSH_KEY_PUB: ${{ inputs.ssh_key_pub }}
         ACTION_SSH_DOMAIN: ${{ inputs.ssh_domain }}
+        ACTION_SSH_PORT: ${{ inputs.ssh_port }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
         ACTION_MEMORY_LIMIT: ${{ inputs.memory_limit }}
       id: composer_run
