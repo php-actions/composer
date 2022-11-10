@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: php-actions/composer@v6
     # ... then your own project steps ...
 ```
@@ -67,7 +67,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 + `php_version` - Choose which version of PHP you want to use (7.1, 7.2, 7.3, 7.4 or 8.0)
-+ `version` - Choose which version of Composer you want to use (1 or 2)
++ `version` - Choose which version of Composer you want to use (1.x, 2.x, 2.2.x, latest)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
@@ -94,8 +94,10 @@ This action runs on a custom base image, available at https://github.com/php-act
 
 Use the following inputs to run a specific PHP/Composer version combination:
 
-+ `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0` (default: `latest` aka: `8.0`)
-+ `version` Available versions: `1`, `2` (default: `latest` aka: `2`)
++ `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1` (default: `latest` aka: `8.1`)
++ `version` Available versions: `latest`, `preview`, `snapshot`, `1.x`, `2.x`, `2.2.x` or the exact version (default: `latest`)
+
+Make sure to put the PHP version number in quotes, otherwise YAML will interpret e.g. `8.0` as `8` which means latest 8.x, not 8.0.
 
 Example configuration that runs Composer version 1 on PHP version 7.1:
 ```yaml
@@ -107,7 +109,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php_version: 7.1
+        php_version: "7.1"
         version: 1
 ```
 
@@ -128,9 +130,9 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php_version: 7.4
+        php_version: "7.4"
         php_extensions: redis exif
-        version: 2
+        version: 2.x
 ```
 
 Caching dependencies for faster builds
@@ -150,10 +152,10 @@ jobs:
     runs-on: [ubuntu-latest]
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Cache Composer dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: /tmp/composer-cache
         key: ${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
@@ -170,7 +172,7 @@ Installing private repositories
 
 To install from a private repository, SSH authentication must be used. Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [deploy keys][deploy-keys]. 
 
-Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `ssh_key` and `ssh_key_pub` inputs. If your private repository is stored on another server than github.com, you also need to pass the domain via `ssh_domain`.
+Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `ssh_key` and `ssh_key_pub` inputs. If your private repository is stored on another server than github.com, you also need to pass the domain via `ssh_domain`. If the private repository is configured to use a non-standard SSH port, you can configure this by passing `ssh_port`.
 
 Example yaml, showing how to pass secrets:
 
@@ -195,38 +197,23 @@ It's recommended to use SSH keys for authentication, but sometimes HTTP basic au
 
 1) Create a [personal access token](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) for the Github account you wish to authenticate with.
 
-2) Add the following JSON to a new Github Secret called `COMPOSER_AUTH_JSON`:
+2) Create a new GitHub Secret called `PAT` with a value of personal access token.
 
-```json
-{
-  "http-basic": {
-    "github.com": {
-      "username": "<YOUR_GITHUB_USERNAME>",
-      "password": "<YOUR_PERSONAL_ACCESS_TOKEN>"
-    }
-  }
-}
-```
-
-3) Pass this secret to auth.json as a separate action step within your Yaml config, and remove auth.json to prevent deploying it:
+3) Pass this secret to COMPOSER_AUTH variable:
 
 ```yaml
 jobs:
   build:
 
     ...
-    
-    - name: Add HTTP basic auth credentials
-      run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
     - name: Install dependencies
       uses: php-actions/composer@v6
-      
-    - name: Remove auth.json file
-      run: rm -f $GITHUB_WORKSPACE/auth.json
+      env:
+        COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.PAT }}"} }'
 ```
 
-4) Now, any connections Composer makes to Github.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
+4) Now, any connections Composer makes to GitHub.com will use your HTTP basic auth credentials, which is essentially the same as being logged in as you, so your private repositories will now be available to Composer.
 
 ***
 
