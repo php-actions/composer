@@ -103,7 +103,7 @@ runs:
       run: |
         set -e
         bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/cee5b9fa9fbc4c888e7a62bbb7b8eade18e3c56b/php-build.bash) composer
-        ${{ github.action_path }}/composer-action.bash || cat ${{ github.workspace }}/output.log
+        ${{ github.action_path }}/composer-action.bash
       shell: bash
 
 branding:
