@@ -39,7 +39,7 @@ Please feel free to use `uses: php-actions/composer@v6` to always run the latest
 Running custom commands
 -----------------------
 
-By default, adding `- uses: php-actions/composer@v6` into your workflow will run `composer install`, as `install` is the default command name. The install command will be provided with a default set of arguments (see below).
+By default, adding `- uses: php-actions/composer@v6` into your workflow will run `composer install`, as `install` is the default command name. The `install` command will be provided with a default set of arguments (see below).
 
 You can issue custom commands by passing a `command` input, like so:
 
@@ -60,14 +60,14 @@ Passing arguments
 
 Any arbitrary arguments can be passed to composer by using the `args` input, however there are a few inputs pre-configured to handle common arguments. All inputs are optional. Please see the following list:
 
-+ `interaction` - Whether to ask any interactive questions - yes / no (default no)
-+ `dev` - Whether to install dev packages - yes / no (default **yes**)
-+ `progress` - Whether to output download progress - yes / no (default no)
-+ `quiet` - Whether to suppress all messages - yes / no (default no)
++ `interaction` - Whether to ask any interactive questions - yes / no (default `no`)
++ `dev` - Whether to install dev packages - yes / no (default `yes`)
++ `progress` - Whether to output download progress - yes / no (default `no`)
++ `quiet` - Whether to suppress all messages - yes / no (default `no`)
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
-+ `php_version` - Choose which version of PHP you want to use (7.1, 7.2, 7.3, 7.4 or 8.0)
-+ `version` - Choose which version of Composer you want to use (1.x, 2.x, 2.2.x, latest)
++ `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `8.2`, or any version listed on https://www.php.net/releases/index.php)
++ `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.10`, `2.3`, `2.5.4`)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
