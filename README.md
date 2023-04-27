@@ -66,7 +66,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `quiet` - Whether to suppress all messages - yes / no (default `no`)
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
-+ `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `8.2`, or any version listed on https://www.php.net/releases/index.php)
++ `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `7.4.29`, 8.2`, or any version listed on https://www.php.net/releases/index.php)
 + `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.10`, `2.3`, `2.5.4`)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
 
