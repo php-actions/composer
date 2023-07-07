@@ -73,6 +73,10 @@ inputs:
     description: "Sets the composer memory limit"
     required: false
 
+  app_folder:
+    description: "Sets the aplication folder"
+    required: false
+
 outputs:
   full_command:
     description: "The full command passed to docker to run"
@@ -99,6 +103,7 @@ runs:
         ACTION_SSH_PORT: ${{ inputs.ssh_port }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
         ACTION_MEMORY_LIMIT: ${{ inputs.memory_limit }}
+        ACTION_APP_FOLDER: ${{ inputs.app_folder }}
       id: composer_run
       run: |
         set -e
