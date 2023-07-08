@@ -69,7 +69,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `7.4.29`, 8.2`, or any version listed on https://www.php.net/releases/index.php)
 + `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.10`, `2.3`, `2.5.4`)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
-+ `app_folder` - Sets the aplication folder - (default /app)
++ `container_workdir` - Sets the aplication workdir inside container - (default /app)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 

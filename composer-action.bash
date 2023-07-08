@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-app_folder="/app"
+container_workdir="/app"
 github_action_path=$(dirname "$0")
 docker_tag=$(cat ./docker_tag)
 echo "Docker tag: $docker_tag" >> output.log 2>&1
@@ -196,8 +196,8 @@ do
 	fi
 done <<<$(env)
 
-if [ -z "$ACTION_APP_FOLDER" ]; then
-	app_folder="${ACTION_APP_FOLDER}"
+if [ -z "$ACTION_CONTAINER_WORKDIR" ]; then
+	container_workdir="${ACTION_CONTAINER_WORKDIR}"
 fi
 
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
@@ -208,7 +208,7 @@ docker run --rm \
 	--volume ~/.ssh:/root/.ssh \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
-	--workdir ${app_folder} \
+	--workdir ${container_workdir} \
 	--env-file ./DOCKER_ENV \
 	--network host \
 	${memory_limit} \

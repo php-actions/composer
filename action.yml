@@ -73,8 +73,8 @@ inputs:
     description: "Sets the composer memory limit"
     required: false
 
-  app_folder:
-    description: "Sets the aplication folder"
+  container_workdir:
+    description: "Sets the aplication workdir inside container"
     required: false
 
 outputs:
@@ -103,7 +103,7 @@ runs:
         ACTION_SSH_PORT: ${{ inputs.ssh_port }}
         ACTION_WORKING_DIR: ${{ inputs.working_dir }}
         ACTION_MEMORY_LIMIT: ${{ inputs.memory_limit }}
-        ACTION_APP_FOLDER: ${{ inputs.app_folder }}
+        ACTION_CONTAINER_WORKDIR: ${{ inputs.container_workdir }}
       id: composer_run
       run: |
         set -e
