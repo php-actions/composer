@@ -114,6 +114,20 @@ jobs:
         version: 1
 ```
 
+Execute composer install in a different folder
+-------------------------------------------
+
+```yaml
+    - name: Install dependencies
+      uses: "php-actions/composer@v6"
+      env:
+        COMPOSER: "composer.json"
+      with:
+        php_version: "5.6.40"
+        version: "2.2"
+        args: "--ignore-platform-reqs --optimize-autoloader"
+        working_dir: "my/different/folder"
+```
 
 Including PHP Extensions
 -------------------------------------------
