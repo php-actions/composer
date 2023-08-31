@@ -69,6 +69,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `7.4.29`, 8.2`, or any version listed on https://www.php.net/releases/index.php)
 + `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.x`, `1.10.26`, `2.x`, `2.2.x`, or any exact version listed on https://getcomposer.org/download/)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
++ `container_workdir` - Sets the aplication workdir inside container - (default /app)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
 
@@ -113,6 +114,20 @@ jobs:
         version: 1
 ```
 
+Execute composer install in a different folder
+-------------------------------------------
+
+```yaml
+    - name: Install dependencies
+      uses: "php-actions/composer@v6"
+      env:
+        COMPOSER: "composer.json"
+      with:
+        php_version: "5.6.40"
+        version: "2.2"
+        args: "--ignore-platform-reqs --optimize-autoloader"
+        working_dir: "my/different/folder"
+```
 
 Including PHP Extensions
 -------------------------------------------
