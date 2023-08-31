@@ -67,7 +67,7 @@ Any arbitrary arguments can be passed to composer by using the `args` input, how
 + `args` - Optional arguments to pass - no constraints (default _empty_)
 + `only_args` - Only run the desired command with this args. Ignoring all other provided arguments(default _empty_)
 + `php_version` - Choose which version of PHP you want to use - x.y (default `latest`) (e.g. `7.4.29`, 8.2`, or any version listed on https://www.php.net/releases/index.php)
-+ `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.10`, `2.3`, `2.5.4`)
++ `version` - Choose which version of Composer you want to use - default `latest` (e.g. `1.x`, `1.10.26`, `2.x`, `2.2.x`, or any exact version listed on https://getcomposer.org/download/)
 + `memory_limit` - Sets the composer memory limit - (default _empty_)
 
 There are also SSH input available: `ssh_key`, `ssh_key_pub` and `ssh_domain` that are used for depending on private repositories. See below for more information on usage.
@@ -95,7 +95,7 @@ This action runs on a custom base image, available at https://github.com/php-act
 Use the following inputs to run a specific PHP/Composer version combination:
 
 + `php_version` Available versions: `7.1`, `7.2`, `7.3`, `7.4`, `8.0`, `8.1` (default: `latest` aka: `8.1`)
-+ `version` Available versions: `latest`, `preview`, `snapshot`, `1.x`, `2.x`, `2.2.x` or the exact version (default: `latest`)
++ `version` Available versions: `latest`, `preview`, `snapshot`, `1.x`, `2.x`, `2.2.x` or an exact version like `2.5.8` (default: `latest`)
 
 Make sure to put the PHP version number in quotes, otherwise YAML will interpret e.g. `8.0` as `8` which means latest 8.x, not 8.0.
 
