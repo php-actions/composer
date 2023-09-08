@@ -196,7 +196,7 @@ do
 	fi
 done <<<$(env)
 
-if [ -z "$ACTION_CONTAINER_WORKDIR" ]; then
+if [ -n "$ACTION_CONTAINER_WORKDIR" ]; then
 	container_workdir="${ACTION_CONTAINER_WORKDIR}"
 fi
 
