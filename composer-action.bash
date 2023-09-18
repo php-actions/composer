@@ -206,7 +206,7 @@ docker run --rm \
 	--user $(id -u):$(id -g) \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
-	--volume ~/.ssh:/root/.ssh \
+	--volume ~/.ssh:~/.ssh \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir ${container_workdir} \
