@@ -203,6 +203,7 @@ fi
 echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
+	--user $(id -u):$(id -g) \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
 	--volume ~/.gitconfig:/root/.gitconfig \
 	--volume ~/.ssh:/root/.ssh \
