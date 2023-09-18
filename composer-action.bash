@@ -214,3 +214,5 @@ docker run --rm \
 	--network host \
 	${memory_limit} \
 	${docker_tag} ${command_string}
+
+ls -la
