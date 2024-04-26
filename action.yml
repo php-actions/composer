@@ -107,7 +107,7 @@ runs:
       id: composer_run
       run: |
         set -e
-        bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/v2.2.0/php-build.bash) composer
+        bash <(curl -s https://raw.githubusercontent.com/php-actions/php-build/v2.1.2/php-build.bash) composer
         ${{ github.action_path }}/composer-action.bash
       shell: bash
 
