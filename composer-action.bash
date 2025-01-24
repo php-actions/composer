@@ -52,37 +52,39 @@ command_string="composer"
 
 # In case there is need to install private repositories, SSH details are stored
 # in these two places, which are mounted on the Composer docker container later.
-mkdir -p ~/.ssh
-touch ~/.gitconfig
+ssh_path="${github_action_path}/__tmp/ssh"
+gitconfig_path="${github_action_path}/__tmp/gitconfig"
+mkdir -p "$ssh_path"
+touch "$gitconfig_path"
 
 if [ -n "$ACTION_SSH_KEY" ]
 then
 	echo "Storing private key file for root" >> output.log 2>&1
-	ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-	ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-	ssh-keyscan -t rsa bitbucket.org >> ~/.ssh/known_hosts
+	ssh-keyscan -t rsa github.com >> "$ssh_path/known_hosts"
+	ssh-keyscan -t rsa gitlab.com >> "$ssh_path/known_hosts"
+	ssh-keyscan -t rsa bitbucket.org >> "$ssh_path/known_hosts"
 
 	if [ -n "$ACTION_SSH_DOMAIN" ]
 	then
 		if [ -n "$ACTION_SSH_PORT" ]
 		then
-			ssh-keyscan -t rsa -p $ACTION_SSH_PORT "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
+			ssh-keyscan -t rsa -p $ACTION_SSH_PORT "$ACTION_SSH_DOMAIN" >> "$ssh_path/known_hosts"
                 else
-			ssh-keyscan -t rsa "$ACTION_SSH_DOMAIN" >> ~/.ssh/known_hosts
+			ssh-keyscan -t rsa "$ACTION_SSH_DOMAIN" >> "$ssh_path/known_hosts"
 		fi
 	fi
 
-	echo "$ACTION_SSH_KEY" > ~/.ssh/action_rsa
-	echo "$ACTION_SSH_KEY_PUB" > ~/.ssh/action_rsa.pub
-	chmod 600 ~/.ssh/action_rsa
+	echo "$ACTION_SSH_KEY" > "$ssh_path/action_rsa"
+	echo "$ACTION_SSH_KEY_PUB" > "$ssh_path/action_rsa.pub"
+	chmod 600 "$ssh_path/action_rsa"
 
 	echo "PRIVATE KEY:" >> output.log 2>&1
-	md5sum ~/.ssh/action_rsa >> output.log 2>&1
+	md5sum "$ssh_path/action_rsa" >> output.log 2>&1
 	echo "PUBLIC KEY:" >> output.log 2>&1
-	md5sum ~/.ssh/action_rsa.pub >> output.log 2>&1
+	md5sum "$ssh_path/action_rsa.pub" >> output.log 2>&1
 
-	echo "[core]" >> ~/.gitconfig
-	echo "sshCommand = \"ssh -i ~/.ssh/action_rsa\"" >> ~/.gitconfig
+	echo "[core]" >> "$gitconfig_path"
+	echo "sshCommand = \"ssh -i ~/.ssh/action_rsa\"" >> "$gitconfig_path"
 else
 	echo "No private keys supplied" >> output.log 2>&1
 fi
@@ -204,8 +206,8 @@ echo "name=full_command::${command_string}" >> $GITHUB_OUTPUT
 
 docker run --rm \
 	--volume "${github_action_path}/composer.phar":/usr/local/bin/composer \
-	--volume ~/.gitconfig:/root/.gitconfig \
-	--volume ~/.ssh:/root/.ssh \
+	--volume "$gitconfig_path":/root/.gitconfig \
+	--volume "$ssh_path":/root/.ssh \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir ${container_workdir} \
@@ -213,3 +215,6 @@ docker run --rm \
 	--network host \
 	${memory_limit} \
 	${docker_tag} ${command_string}
+	
+rm -rf "${github_action_path}/__tmp"
+
