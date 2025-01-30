@@ -1,5 +1,5 @@
 name: "Composer (php-actions)"
-description: "Use the Composer CLI in your Github Actions."
+description: "Use the Composer CLI in your GitHub Actions."
 
 inputs:
   version:
@@ -74,7 +74,7 @@ inputs:
     required: false
 
   container_workdir:
-    description: "Sets the aplication workdir inside container"
+    description: "Sets the application workdir inside container"
     required: false
 
 outputs:
