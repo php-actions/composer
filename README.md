@@ -187,7 +187,7 @@ Installing private repositories
 
 To install from a private repository, SSH authentication must be used. Generate an SSH key pair for this purpose and add it to your private repository's configuration, preferable with only read-only privileges. On Github for instance, this can be done by using [deploy keys][deploy-keys].
 
-If using multiple private repos, Github does not allow to share deploy keys across repos, so you can use a normal user account that has access to all the private repos and [add the SSH key][add-ssh-key-git] to that user.
+If using multiple private repositories, Github does not allow to share deploy keys across repositories, so you can use a normal user account that has access to all the private repositories and [add the SSH key][add-ssh-key-git] to that user.
 
 Add the key pair to your project using  [Github Secrets][secrets], and pass them into the `php-actions/composer` action by using the `ssh_key` and `ssh_key_pub` inputs. If your private repository is stored on another server than github.com, you also need to pass the domain via `ssh_domain`. If the private repository is configured to use a non-standard SSH port, you can configure this by passing `ssh_port`.
 
