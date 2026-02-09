@@ -1,4 +1,4 @@
-<img src="http://159.65.210.101/php-actions.png" align="right" alt="PHP Actions for Github" />
+<img src="https://avatars.githubusercontent.com/u/54269877" align="right" alt="PHP Actions for Github" />
 
 Use the Composer CLI in your Github Actions.
 ============================================
