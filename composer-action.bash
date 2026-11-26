@@ -189,13 +189,18 @@ done <<<$(docker run --rm "${docker_tag}" env)
 
 while IFS= read -r line
 do
-	key=$(echo "$line" | cut -f1 -d=)
-	if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"
-	then
-    		echo "Skipping env variable $key" >> output.log
-	else
-		echo "$line" >> DOCKER_ENV
-	fi
+    # Only process lines that look like valid KEY=VALUE pairs
+    if [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; then
+        key=$(echo "$line" | cut -f1 -d=)
+        if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"
+        then
+            echo "Skipping env variable $key" >> output.log 
+        else
+            echo "$line" >> DOCKER_ENV
+        fi
+    else
+        echo "Skipping invalid env line: $line" >> output.log
+    fi
 done <<<$(env)
 
 if [ -n "$ACTION_CONTAINER_WORKDIR" ]; then
