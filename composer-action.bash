@@ -182,26 +182,36 @@ unset ACTION_SSH_KEY
 unset ACTION_SSH_KEY_PUB
 
 dockerKeys=()
-while IFS= read -r line
+while IFS= read -r -d '' entry
 do
-	dockerKeys+=( $(echo "$line" | cut -f1 -d=) )
-done <<<$(docker run --rm "${docker_tag}" env)
+	dockerKeys+=( "${entry%%=*}" )
+done < <(docker run --rm "${docker_tag}" env -0)
 
-while IFS= read -r line
+# Pass names to Docker so values (including newlines) are read directly from
+# the host environment instead of being serialized into a line-based env file.
+dockerEnvArgs=()
+while IFS= read -r -d '' entry
 do
-    # Only process lines that look like valid KEY=VALUE pairs
-    if [[ "$line" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; then
-        key=$(echo "$line" | cut -f1 -d=)
-        if printf '%s\n' "${dockerKeys[@]}" | grep -q -P "^${key}\$"
-        then
-            echo "Skipping env variable $key" >> output.log 
-        else
-            echo "$line" >> DOCKER_ENV
-        fi
-    else
-        echo "Skipping invalid env line: $line" >> output.log
-    fi
-done <<<$(env)
+	key=${entry%%=*}
+	if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+		echo "Skipping env variable with invalid name" >> output.log
+		continue
+	fi
+
+	skip_env=false
+	for dockerKey in "${dockerKeys[@]}"; do
+		if [[ "$key" == "$dockerKey" ]]; then
+			skip_env=true
+			break
+		fi
+	done
+
+	if "$skip_env"; then
+		echo "Skipping env variable $key" >> output.log
+	else
+		dockerEnvArgs+=( --env "$key" )
+	fi
+done < <(env -0)
 
 if [ -n "$ACTION_CONTAINER_WORKDIR" ]; then
 	container_workdir="${ACTION_CONTAINER_WORKDIR}"
@@ -216,7 +226,7 @@ docker run --rm \
 	--volume "${GITHUB_WORKSPACE}":/app \
 	--volume "/tmp/composer-cache":/tmp/composer-cache \
 	--workdir ${container_workdir} \
-	--env-file ./DOCKER_ENV \
+	"${dockerEnvArgs[@]}" \
 	--network host \
 	${memory_limit} \
 	${docker_tag} ${command_string}
